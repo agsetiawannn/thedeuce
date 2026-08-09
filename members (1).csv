@@ -1,0 +1,88 @@
+member_id;user_id;name;join_date;skill_level;email;lifetime_points;status_tier;phone_number
+M0001;1;Hung;01/06/2026;BEGINNER+;anandazhou09@gmail.com;364;CLUB;6,28519E+12
+M0002;2;Vaness;01/06/2026;BEGINNER;vanessafebry97@gmail.com;115;DIAMOND;6,28222E+12
+M0003;3;Adhyasta;01/06/2026;BEGINNER;Idabagusadhya@gmail.com;117;DIAMOND;NULL
+M0004;4;NADIA;01/06/2026;BEGINNER;indahnadiaswarii@gmail.com;39;DIAMOND;NULL
+M0005;5;Abiseka;01/06/2026;BEGINNER;abiseka33@gmail.com;104;DIAMOND;NULL
+M0006;6;ECAK;01/06/2026;BEGINNER;sangayuecak@gmail.com;60;DIAMOND;NULL
+M0007;7;ALDI;01/06/2026;BEGINNER+;NULL;0;DIAMOND;NULL
+M0008;8;IVAN T;01/06/2026;BEGINNER+;NULL;0;DIAMOND;NULL
+M0009;9;REVATA;01/06/2026;BEGINNER+;revatasiriananda@gmail.com;183;DIAMOND;NULL
+M0010;10;AYUDITA;01/06/2026;BEGINNER+;kmgayudita35@gmail.com;16;DIAMOND;NULL
+M0011;11;NANDIYA;01/06/2026;L. BEGINNER;nandiyakarunadh@gmail.com;23;DIAMOND;NULL
+M0012;12;HENRY;01/06/2026;L. BEGINNER;NULL;11;DIAMOND;NULL
+M0013;13;RIAN Y;24/06/2026;BEGINNER+;yuliawanrian@gmail.com;92;DIAMOND;NULL
+M0014;14;OKA;24/06/2026;L. INTERMEDIATE;okamobi123@gmail.com;28;DIAMOND;NULL
+M0015;15;IWAN;24/06/2026;BEGINNER;aliridwankk@gmail.com;22;DIAMOND;NULL
+M0016;16;BAGUS G;24/06/2026;L. BEGINNER;gusgarlicka@gmail.com;49;DIAMOND;NULL
+M0017;17;YUDHA;24/06/2026;L. BEGINNER;Yudha.arthawijaya@gmail.com;27;DIAMOND;NULL
+M0018;18;BHASKARA;25/06/2026;BEGINNER+;bagusbhaskara14@gmail.com;28;DIAMOND;NULL
+M0019;19;GUS YANA;25/06/2026;BEGINNER+;wiradnyana99@gmail.com;50;DIAMOND;NULL
+M0020;50;SEKAR TABSKUY;25/06/2026;BEGINNER;sekarletlora@gmail.com;82;DIAMOND;NULL
+M0021;21;MENTARI;25/06/2026;BEGINNER;lidyamentari31@gmail.com;163;DIAMOND;NULL
+M0022;22;WIRA;28/06/2026;BEGINNER+;kadekadhiwirayudha@gmail.com;30;DIAMOND;NULL
+M0023;23;TRISNA;28/06/2026;BEGINNER;itrisnajaya@outlook.com;14;DIAMOND;NULL
+M0024;24;RIRI;28/06/2026;BEGINNER;triyana.recovery@gmail.com;22;DIAMOND;NULL
+M0025;25;OKY;28/06/2026;L. BEGINNER;okypetter@gmail.com;32;DIAMOND;NULL
+M0026;26;AFIN;30/06/2026;BEGINNER+;rama.tannaya@gmail.com;56;DIAMOND;NULL
+M0027;27;DIANA;30/06/2026;BEGINNER+;NULL;16;DIAMOND;NULL
+M0028;28;RAKA S;30/06/2026;BEGINNER;rakaprasetya.lie@gmail.com;64;DIAMOND;NULL
+M0029;29;QUIK;02/07/2026;BEGINNER+;dedwisaptarahadi@gmail.com;35;DIAMOND;NULL
+M0030;30;STEPHEN;02/07/2026;BEGINNER;stephensutanto123@gmail.com;28;DIAMOND;NULL
+M0031;31;OLIVIA;02/07/2026;BEGINNER;oliviadean170@gmail.com;46;DIAMOND;NULL
+M0032;32;PIBBLEBULAT;03/07/2026;BEGINNER;putudiahdamayanti1406@gmail.com;167;DIAMOND;NULL
+M0033;33;WILSON;03/07/2026;BEGINNER+;agusnathayana@gmail.com;120;DIAMOND;NULL
+M0034;34;RISTYA;03/07/2026;BEGINNER;ristyanara@gmail.com;18;DIAMOND;NULL
+M0035;35;AHRI;05/07/2026;BEGINNER+;ahriansyahm@gmail.com;28;DIAMOND;NULL
+M0036;36;NAYA;05/07/2026;BEGINNER;nayaka2870@gmail.com;40;DIAMOND;NULL
+M0037;37;WULAN;05/07/2026;BEGINNER;wulantrisnap@gmail.com;56;DIAMOND;NULL
+M0038;38;TEGUH;05/07/2026;BEGINNER;ftk2704@gmail.com;39;DIAMOND;NULL
+M0039;39;UCIK;09/07/2026;BEGINNER+;kanjengyuichiro@gmail.com;35;DIAMOND;NULL
+M0040;40;DAIVA;10/07/2026;BEGINNER+;daivagunawan14@gmail.com;75;DIAMOND;NULL
+M0041;41;OKA (W);10/07/2026;BEGINNER;okabhismaning@gmail.com;39;DIAMOND;NULL
+M0042;42;AFI;11/07/2026;BEGINNER;afi.intan@yahoo.com;35;DIAMOND;NULL
+M0043;43;DEVI;11/07/2026;BEGINNER;paramitaokadevi@gmail.com;22;DIAMOND;NULL
+M0044;44;SINTHA;11/07/2026;BEGINNER;sinthaagn63@gmail.com;12;DIAMOND;NULL
+M0045;45;BARA;15/07/2026;BEGINNER+;NULL;35;DIAMOND;NULL
+M0046;46;RIZAL;15/07/2026;BEGINNER;NULL;22;DIAMOND;NULL
+M0047;47;Setiawan;14/07/2026;NULL;setiawan18221@gmail.com;35;DIAMOND;NULL
+M0048;48;Jess;15/07/2026;NULL;aguskomang646@gmail.com;0;DIAMOND;NULL
+M0049;49;Nayaka Darmika;16/07/2026;NULL;d.nayakadarmika44.slub@gmail.com;0;DIAMOND;NULL
+M0050;NULL;Elsye Kanalomi;16/07/2026;NULL;elsyekanalomi1998@gmail.com;16;DIAMOND;NULL
+M0051;51;Richard Benedic;17/07/2026;NULL;richardbenedic16@gmail.com;18;DIAMOND;NULL
+M0052;52;Varien;17/07/2026;NULL;variensa22@gmail.com;12;DIAMOND;NULL
+M0053;53;Relin Tania;17/07/2026;NULL;relintania1@gmail.com;11;DIAMOND;NULL
+M0054;54;Fernaldi;17/07/2026;NULL;fernaldi.shb@gmail.com;105;DIAMOND;NULL
+M0055;55;DEVA NUGRAHA;19/07/2026;NULL;devanugraha.photoworks@gmail.com;75;DIAMOND;NULL
+M0056;56;Andrian;19/07/2026;NULL;andrian.wijaya2001@gmail.com;35;DIAMOND;NULL
+M0057;57;choni nurfa;20/07/2026;NULL;choninurfa@gmail.com;0;DIAMOND;NULL
+M0058;58;Joenathan Uto;20/07/2026;NULL;utojoenathan@gmail.com;0;DIAMOND;NULL
+M0059;59;B.02.Albert Gunawan;20/07/2026;NULL;albertgunawang@gmail.com;12;DIAMOND;NULL
+M0060;60;Mellena H;20/07/2026;NULL;grand3store@gmail.com;0;DIAMOND;NULL
+M0061;61;Ngurah Adi;20/07/2026;NULL;adiinugrahaa99@gmail.com;87;DIAMOND;NULL
+M0062;62;Rayan Veloce;20/07/2026;NULL;rayanveloce@gmail.com;0;DIAMOND;NULL
+M0063;63;stephanie yesinta;20/07/2026;NULL;stephanieyesinta@gmail.com;0;DIAMOND;NULL
+M0064;64;Nadja Seinda Hafizhah;21/07/2026;NULL;nadjashafizhah@gmail.com;0;DIAMOND;NULL
+M0065;65;Muhammad Rifky Novandi;21/07/2026;NULL;vandyrivan.vr@gmail.com;0;DIAMOND;NULL
+M0066;66;Dvid Ryn;21/07/2026;NULL;dvidryn@gmail.com;0;DIAMOND;NULL
+M0067;67;Enzo Jaury;21/07/2026;NULL;enzo.jauri@gmail.com;0;DIAMOND;NULL
+M0068;68;Ariyudha IB;21/07/2026;NULL;e.ariyudha08@gmail.com;35;DIAMOND;NULL
+M0069;69;Kaon Hasegawa;21/07/2026;NULL;kaonhasegawa55@gmail.com;16;DIAMOND;NULL
+M0070;70;IB Gede Prastawa;21/07/2026;NULL;ibgedeprastawa@gmail.com;22;DIAMOND;NULL
+M0071;71;Agung Piero;22/07/2026;NULL;piney29@gmail.com;0;DIAMOND;NULL
+M0072;72;Kadek Ana Dwijayanti;23/07/2026;NULL;ana.dwijayanti10@gmail.com;28;DIAMOND;NULL
+M0073;73;Luthfi Ikhsan;24/07/2026;NULL;luthfikhsans@gmail.com;0;DIAMOND;NULL
+M0074;74;Bagus Bharata;25/07/2026;NULL;ebharata12@gmail.com;35;DIAMOND;NULL
+M0075;75;Rezky Dewantara;25/07/2026;NULL;puturezkywahyu@gmail.com;0;DIAMOND;NULL
+M0076;76;Detha Nata Ganendra;26/07/2026;NULL;dethanataganendra@gmail.com;22;DIAMOND;NULL
+M0077;77;Yuvan Gunawan;26/07/2026;NULL;ypgunawan@gmail.com;11;DIAMOND;NULL
+M0078;78;jason darmadi;26/07/2026;NULL;darmadijason@gmail.com;35;DIAMOND;NULL
+M0079;79;thessalonica kd;26/07/2026;NULL;thessakd.collectives@gmail.com;11;DIAMOND;NULL
+M0080;80;Yuvinta Riandisty;26/07/2026;NULL;yuvinta.r@gmail.com;16;DIAMOND;NULL
+M0081;81;aulia syaffitri;27/07/2026;NULL;auliasyaffitri5@gmail.com;0;DIAMOND;NULL
+M0082;82;cika reni hafida;27/07/2026;NULL;cikarenihafida28@gmail.com;14;DIAMOND;NULL
+M0083;83;Revin Almadani;27/07/2026;NULL;revinalmadani00@gmail.com;28;DIAMOND;NULL
+M0084;84;Arya Janardana;27/07/2026;NULL;janardanaarya@gmail.com;22;DIAMOND;NULL
+M0085;85;Ayu Widyastuti;27/07/2026;NULL;ayuwidyastuti17@gmail.com;12;DIAMOND;NULL
+M0086;86;raffael henrycus;29/07/2026;NULL;henrycusraffael@gmail.com;16;DIAMOND;NULL
+M0087;87;Shan Andrea Madu;29/07/2026;NULL;shanandreamadu64@gmail.com;28;DIAMOND;NULL

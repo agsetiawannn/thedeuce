@@ -1,0 +1,5 @@
+<?php
+$content = file_get_contents('app/Http/Controllers/ProfileController.php');
+$broken = "            }], 'placement_bonus')\n        // Query the leaderboard properly by summing lifetime points (already updated in member table)\n        \$currentRank = \App\Models\Member::orderByDesc('lifetime_points')->pluck('member_id')->search(\$member->member_id) + 1;";
+$fixed = "            }], 'placement_bonus')\n            ->get()\n            ->map(function (\$m) {\n                \$m->monthly_points = (\$m->monthly_event_points ?? 0) + (\$m->monthly_placement_bonus ?? 0);\n                return \$m;\n            })\n            ->sortByDesc('lifetime_points')\n            ->sortByDesc('monthly_points')\n            ->values();\n\n        \$currentRank = \$allMembers->search(function(\$item) use (\$member) {\n            return \$item->member_id === \$member->member_id;\n        }) + 1;";
+file_put_contents('app/Http/Controllers/ProfileController.php', str_replace($broken, $fixed, $content));

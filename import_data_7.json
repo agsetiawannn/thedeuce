@@ -1,0 +1,2724 @@
+{
+  "results": [
+    {
+      "Event ID": "E0001",
+      "Date": 46204,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 5,
+      "L": 2,
+      "Diff": 9,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0001",
+      "Date": 46204,
+      "Member ID": "M0002",
+      "Name": "VANESS",
+      "W": 2,
+      "L": 5,
+      "Diff": -9,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0001",
+      "Date": 46204,
+      "Member ID": "M0005",
+      "Name": "ABISEKA J",
+      "W": 4,
+      "L": 3,
+      "Diff": "2",
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0001",
+      "Date": 46204,
+      "Member ID": "M0007",
+      "Name": "ALDI",
+      "W": 5,
+      "L": 2,
+      "Diff": "7",
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0001",
+      "Date": 46204,
+      "Member ID": "M0009",
+      "Name": "REVATA",
+      "W": 6,
+      "L": 1,
+      "Diff": 5,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0001",
+      "Date": 46204,
+      "Member ID": "M0010",
+      "Name": "AYUDITA",
+      "W": 3,
+      "L": 4,
+      "Diff": 0,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0001",
+      "Date": 46204,
+      "Member ID": "M0011",
+      "Name": "NANDIYA",
+      "W": 2,
+      "L": 5,
+      "Diff": -10,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0001",
+      "Date": 46204,
+      "Member ID": "M0012",
+      "Name": "HENRY",
+      "W": 1,
+      "L": 6,
+      "Diff": -14,
+      "Finish": 8,
+      "Placement Bonus": 1,
+      "Attendance": 10,
+      "Event Points": 11
+    },
+    {
+      "Event ID": "E0002",
+      "Date": 46204,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 2,
+      "L": 5,
+      "Diff": -5,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0002",
+      "Date": 46204,
+      "Member ID": "M0005",
+      "Name": "ABISEKA J",
+      "W": 3,
+      "L": 4,
+      "Diff": -2,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0002",
+      "Date": 46204,
+      "Member ID": "M0006",
+      "Name": "ECAK",
+      "W": 3,
+      "L": 4,
+      "Diff": -2,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0002",
+      "Date": 46204,
+      "Member ID": "M0013",
+      "Name": "RIAN Y",
+      "W": 7,
+      "L": 0,
+      "Diff": 15,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0002",
+      "Date": 46204,
+      "Member ID": "M0014",
+      "Name": "OKA",
+      "W": 6,
+      "L": 1,
+      "Diff": 14,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0002",
+      "Date": 46204,
+      "Member ID": "M0015",
+      "Name": "IWAN",
+      "W": 4,
+      "L": 3,
+      "Diff": 3,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0002",
+      "Date": 46204,
+      "Member ID": "M0016",
+      "Name": "BAGUS G",
+      "W": 2,
+      "L": 5,
+      "Diff": -8,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0002",
+      "Date": 46204,
+      "Member ID": "M0017",
+      "Name": "YUDHA",
+      "W": 1,
+      "L": 6,
+      "Diff": -15,
+      "Finish": 8,
+      "Placement Bonus": 1,
+      "Attendance": 10,
+      "Event Points": 11
+    },
+    {
+      "Event ID": "E0003",
+      "Date": 46204,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 5,
+      "L": 0,
+      "Diff": 15,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0003",
+      "Date": 46204,
+      "Member ID": "M0018",
+      "Name": "BHASKARA",
+      "W": 4,
+      "L": 1,
+      "Diff": 9,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0003",
+      "Date": 46204,
+      "Member ID": "M0019",
+      "Name": "GUS YANA",
+      "W": 3,
+      "L": 2,
+      "Diff": 3,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0003",
+      "Date": 46204,
+      "Member ID": "M0020",
+      "Name": "SEKAR W",
+      "W": 2,
+      "L": 3,
+      "Diff": -3,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0003",
+      "Date": 46204,
+      "Member ID": "M0003",
+      "Name": "ADHYASTA",
+      "W": 1,
+      "L": 4,
+      "Diff": -9,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0003",
+      "Date": 46204,
+      "Member ID": "M0021",
+      "Name": "MENTARI",
+      "W": 0,
+      "L": 5,
+      "Diff": -15,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0004",
+      "Date": 46204,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 7,
+      "L": 0,
+      "Diff": 16,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0004",
+      "Date": 46204,
+      "Member ID": "M0003",
+      "Name": "ADHYASTA",
+      "W": 5,
+      "L": 2,
+      "Diff": 5,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0004",
+      "Date": 46204,
+      "Member ID": "M0004",
+      "Name": "NADIA",
+      "W": 1,
+      "L": 6,
+      "Diff": -12,
+      "Finish": 8,
+      "Placement Bonus": 1,
+      "Attendance": 10,
+      "Event Points": 11
+    },
+    {
+      "Event ID": "E0004",
+      "Date": 46204,
+      "Member ID": "M0002",
+      "Name": "VANESS",
+      "W": 1,
+      "L": 6,
+      "Diff": -9,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0004",
+      "Date": 46204,
+      "Member ID": "M0025",
+      "Name": "OKY",
+      "W": 4,
+      "L": 3,
+      "Diff": 0,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0004",
+      "Date": 46204,
+      "Member ID": "M0024",
+      "Name": "RIRI",
+      "W": 4,
+      "L": 3,
+      "Diff": 7,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0004",
+      "Date": 46204,
+      "Member ID": "M0023",
+      "Name": "TRISNA",
+      "W": 2,
+      "L": 5,
+      "Diff": -11,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0004",
+      "Date": 46204,
+      "Member ID": "M0022",
+      "Name": "WIRA",
+      "W": 4,
+      "L": 3,
+      "Diff": 4,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0005",
+      "Date": 46204,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 6,
+      "L": 1,
+      "Diff": 11,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0005",
+      "Date": 46204,
+      "Member ID": "M0009",
+      "Name": "REVATA",
+      "W": 4,
+      "L": 3,
+      "Diff": 6,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0005",
+      "Date": 46204,
+      "Member ID": "M0013",
+      "Name": "RIAN Y",
+      "W": 6,
+      "L": 1,
+      "Diff": 14,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0005",
+      "Date": 46204,
+      "Member ID": "M0026",
+      "Name": "AFIN",
+      "W": 4,
+      "L": 3,
+      "Diff": 0,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0005",
+      "Date": 46204,
+      "Member ID": "M0027",
+      "Name": "DIANA",
+      "W": 3,
+      "L": 4,
+      "Diff": 0,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0005",
+      "Date": 46204,
+      "Member ID": "M0028",
+      "Name": "RAKA S",
+      "W": 3,
+      "L": 4,
+      "Diff": -6,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0005",
+      "Date": 46204,
+      "Member ID": "M0002",
+      "Name": "VANESS",
+      "W": 1,
+      "L": 6,
+      "Diff": -13,
+      "Finish": 8,
+      "Placement Bonus": 1,
+      "Attendance": 10,
+      "Event Points": 11
+    },
+    {
+      "Event ID": "E0005",
+      "Date": 46204,
+      "Member ID": "M0016",
+      "Name": "BAGUS G",
+      "W": 1,
+      "L": 6,
+      "Diff": -12,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0006",
+      "Date": 46205,
+      "Member ID": "M0006",
+      "Name": "ECAK",
+      "W": 0,
+      "L": 5,
+      "Diff": -15,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0006",
+      "Date": 46205,
+      "Member ID": "M0031",
+      "Name": "OLIVIA",
+      "W": 1,
+      "L": 4,
+      "Diff": -9,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0006",
+      "Date": 46205,
+      "Member ID": "M0030",
+      "Name": "STEPHEN",
+      "W": 4,
+      "L": 1,
+      "Diff": 9,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0006",
+      "Date": 46205,
+      "Member ID": "M0029",
+      "Name": "QUIK",
+      "W": 5,
+      "L": 0,
+      "Diff": 15,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0006",
+      "Date": 46205,
+      "Member ID": "M0020",
+      "Name": "SEKAR W",
+      "W": 2,
+      "L": 3,
+      "Diff": -3,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0006",
+      "Date": 46205,
+      "Member ID": "M0021",
+      "Name": "MENTARI",
+      "W": 3,
+      "L": 2,
+      "Diff": 3,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0007",
+      "Date": 46206,
+      "Member ID": "M0003",
+      "Name": "ADHYASTA",
+      "W": 6,
+      "L": 1,
+      "Diff": 14,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0007",
+      "Date": 46206,
+      "Member ID": "M0004",
+      "Name": "NADIA",
+      "W": 3,
+      "L": 4,
+      "Diff": -9,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0007",
+      "Date": 46206,
+      "Member ID": "M0033",
+      "Name": "WILSON",
+      "W": 4,
+      "L": 3,
+      "Diff": 2,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0007",
+      "Date": 46206,
+      "Member ID": "M0032",
+      "Name": "PIBBLEBULAT",
+      "W": 5,
+      "L": 2,
+      "Diff": 11,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0007",
+      "Date": 46206,
+      "Member ID": "M0022",
+      "Name": "WIRA",
+      "W": 2,
+      "L": 5,
+      "Diff": -2,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0007",
+      "Date": 46206,
+      "Member ID": "M0016",
+      "Name": "BAGUS G",
+      "W": 2,
+      "L": 5,
+      "Diff": -8,
+      "Finish": 8,
+      "Placement Bonus": 1,
+      "Attendance": 10,
+      "Event Points": 11
+    },
+    {
+      "Event ID": "E0007",
+      "Date": 46206,
+      "Member ID": "M0025",
+      "Name": "OKY",
+      "W": 3,
+      "L": 4,
+      "Diff": -5,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0007",
+      "Date": 46206,
+      "Member ID": "M0034",
+      "Name": "RISTYA",
+      "W": 3,
+      "L": 4,
+      "Diff": -2,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0008",
+      "Date": 46208,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 4,
+      "L": 3,
+      "Diff": 0,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0008",
+      "Date": 46208,
+      "Member ID": "M0002",
+      "Name": "VANESS",
+      "W": 4,
+      "L": 3,
+      "Diff": 0,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0008",
+      "Date": 46208,
+      "Member ID": "M0038",
+      "Name": "TEGUH",
+      "W": 1,
+      "L": 6,
+      "Diff": -9,
+      "Finish": 8,
+      "Placement Bonus": 1,
+      "Attendance": 10,
+      "Event Points": 11
+    },
+    {
+      "Event ID": "E0008",
+      "Date": 46208,
+      "Member ID": "M0037",
+      "Name": "WULAN",
+      "W": 4,
+      "L": 3,
+      "Diff": 4,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0008",
+      "Date": 46208,
+      "Member ID": "M0036",
+      "Name": "NAYA",
+      "W": 1,
+      "L": 6,
+      "Diff": -7,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0008",
+      "Date": 46208,
+      "Member ID": "M0035",
+      "Name": "AHRI",
+      "W": 5,
+      "L": 2,
+      "Diff": 7,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0008",
+      "Date": 46208,
+      "Member ID": "M0033",
+      "Name": "WILSON",
+      "W": 6,
+      "L": 1,
+      "Diff": 12,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0008",
+      "Date": 46208,
+      "Member ID": "M0032",
+      "Name": "PIBBLEBULAT",
+      "W": 3,
+      "L": 4,
+      "Diff": -7,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0009",
+      "Date": 46212,
+      "Member ID": "M0039",
+      "Name": "UCIK",
+      "W": 5,
+      "L": 0,
+      "Diff": 15,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0009",
+      "Date": 46212,
+      "Member ID": "M0032",
+      "Name": "PIBBLEBULAT",
+      "W": 3,
+      "L": 2,
+      "Diff": 3,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0009",
+      "Date": 46212,
+      "Member ID": "M0017",
+      "Name": "YUDHA",
+      "W": 1,
+      "L": 4,
+      "Diff": -9,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0009",
+      "Date": 46212,
+      "Member ID": "M0016",
+      "Name": "BAGUS G",
+      "W": 0,
+      "L": 5,
+      "Diff": -15,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0009",
+      "Date": 46212,
+      "Member ID": "M0019",
+      "Name": "GUS YANA",
+      "W": 4,
+      "L": 1,
+      "Diff": 9,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0009",
+      "Date": 46212,
+      "Member ID": "M0021",
+      "Name": "MENTARI",
+      "W": 2,
+      "L": 3,
+      "Diff": -3,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0010",
+      "Date": 46213,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 4,
+      "L": 3,
+      "Diff": -1,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0010",
+      "Date": 46213,
+      "Member ID": "M0007",
+      "Name": "ALDI",
+      "W": 2,
+      "L": 5,
+      "Diff": -1,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0010",
+      "Date": 46213,
+      "Member ID": "M0009",
+      "Name": "REVATA",
+      "W": 4,
+      "L": 3,
+      "Diff": 3,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0010",
+      "Date": 46213,
+      "Member ID": "M0013",
+      "Name": "RIAN Y",
+      "W": 4,
+      "L": 3,
+      "Diff": 1,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0010",
+      "Date": 46213,
+      "Member ID": "M0026",
+      "Name": "AFIN",
+      "W": 3,
+      "L": 4,
+      "Diff": 2,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0010",
+      "Date": 46213,
+      "Member ID": "M0041",
+      "Name": "OKA (W)",
+      "W": 2,
+      "L": 5,
+      "Diff": "(-9)",
+      "Finish": 8,
+      "Placement Bonus": 1,
+      "Attendance": 10,
+      "Event Points": 11
+    },
+    {
+      "Event ID": "E0010",
+      "Date": 46213,
+      "Member ID": "M0040",
+      "Name": "DAIVA",
+      "W": 7,
+      "L": 0,
+      "Diff": 12,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0010",
+      "Date": 46213,
+      "Member ID": "M0028",
+      "Name": "RAKA S",
+      "W": 2,
+      "L": 5,
+      "Diff": -7,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0011",
+      "Date": 46214,
+      "Member ID": "M0004",
+      "Name": "NADIA",
+      "W": 3,
+      "L": 4,
+      "Diff": -3,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0011",
+      "Date": 46214,
+      "Member ID": "M0006",
+      "Name": "ECAK",
+      "W": 4,
+      "L": 3,
+      "Diff": 1,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0011",
+      "Date": 46214,
+      "Member ID": "M0021",
+      "Name": "MENTARI",
+      "W": 5,
+      "L": 2,
+      "Diff": 8,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0011",
+      "Date": 46214,
+      "Member ID": "M0032",
+      "Name": "PIBBLEBULAT",
+      "W": 4,
+      "L": 3,
+      "Diff": -3,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0011",
+      "Date": 46214,
+      "Member ID": "M0011",
+      "Name": "NANDIYA",
+      "W": 1,
+      "L": 6,
+      "Diff": -11,
+      "Finish": 8,
+      "Placement Bonus": 1,
+      "Attendance": 10,
+      "Event Points": 11
+    },
+    {
+      "Event ID": "E0011",
+      "Date": 46214,
+      "Member ID": "M0042",
+      "Name": "AFI",
+      "W": 5,
+      "L": 2,
+      "Diff": 9,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0011",
+      "Date": 46214,
+      "Member ID": "M0043",
+      "Name": "DEVI",
+      "W": 5,
+      "L": 2,
+      "Diff": 7,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0011",
+      "Date": 46214,
+      "Member ID": "M0044",
+      "Name": "SINTHA",
+      "W": 1,
+      "L": 6,
+      "Diff": -8,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0012",
+      "Date": 46215,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 5,
+      "L": 2,
+      "Diff": 9,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0012",
+      "Date": 46215,
+      "Member ID": "M0002",
+      "Name": "VANESS",
+      "W": 1,
+      "L": 6,
+      "Diff": -14,
+      "Finish": 8,
+      "Placement Bonus": 1,
+      "Attendance": 10,
+      "Event Points": 11
+    },
+    {
+      "Event ID": "E0012",
+      "Date": 46215,
+      "Member ID": "M0005",
+      "Name": "ABISEKA J",
+      "W": 5,
+      "L": 2,
+      "Diff": 7,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0012",
+      "Date": 46215,
+      "Member ID": "M0006",
+      "Name": "ECAK",
+      "W": 1,
+      "L": 6,
+      "Diff": -14,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0012",
+      "Date": 46215,
+      "Member ID": "M0036",
+      "Name": "NAYA",
+      "W": 3,
+      "L": 4,
+      "Diff": -2,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0012",
+      "Date": 46215,
+      "Member ID": "M0037",
+      "Name": "WULAN",
+      "W": 3,
+      "L": 4,
+      "Diff": -1,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0012",
+      "Date": 46215,
+      "Member ID": "M0032",
+      "Name": "PIBBLEBULAT",
+      "W": 4,
+      "L": 3,
+      "Diff": 2,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0012",
+      "Date": 46215,
+      "Member ID": "M0033",
+      "Name": "WILSON",
+      "W": 6,
+      "L": 1,
+      "Diff": 13,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0013",
+      "Date": 46217,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 4,
+      "L": 1,
+      "Diff": 9,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0013",
+      "Date": 46217,
+      "Member ID": "M0002",
+      "Name": "VANESS",
+      "W": 0,
+      "L": 5,
+      "Diff": -15,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0013",
+      "Date": 46217,
+      "Member ID": "M0032",
+      "Name": "PIBBLEBULAT",
+      "W": 1,
+      "L": 4,
+      "Diff": -9,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0013",
+      "Date": 46217,
+      "Member ID": "M0021",
+      "Name": "MENTARI",
+      "W": 2,
+      "L": 3,
+      "Diff": -3,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0013",
+      "Date": 46217,
+      "Member ID": "M0045",
+      "Name": "BARA",
+      "W": 5,
+      "L": 0,
+      "Diff": 15,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0013",
+      "Date": 46217,
+      "Member ID": "M0046",
+      "Name": "RIZAL",
+      "W": 3,
+      "L": 2,
+      "Diff": 3,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0014",
+      "Date": 46219,
+      "Member ID": "M0021",
+      "Name": "MENTARI",
+      "W": 4,
+      "L": 1,
+      "Diff": 9,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0014",
+      "Date": 46219,
+      "Member ID": "M0020",
+      "Name": "SEKAR W",
+      "W": 3,
+      "L": 2,
+      "Diff": 3,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0014",
+      "Date": 46219,
+      "Member ID": "M0028",
+      "Name": "RAKA S",
+      "W": 3,
+      "L": 2,
+      "Diff": 3,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0014",
+      "Date": 46219,
+      "Member ID": "M0032",
+      "Name": "PIBBLEBULAT",
+      "W": 3,
+      "L": 2,
+      "Diff": 3,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0014",
+      "Date": 46219,
+      "Member ID": "M0047",
+      "Name": "ELSYE",
+      "W": 1,
+      "L": 4,
+      "Diff": -9,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0014",
+      "Date": 46219,
+      "Member ID": "M0031",
+      "Name": "OLIVIA",
+      "W": 1,
+      "L": 4,
+      "Diff": -9,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0015",
+      "Date": 46220,
+      "Member ID": "M0009",
+      "Name": "REVATA",
+      "W": 5,
+      "L": 2,
+      "Diff": 7,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0015",
+      "Date": 46220,
+      "Member ID": "M0005",
+      "Name": "ABISEKA J",
+      "W": 5,
+      "L": 2,
+      "Diff": 2,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0015",
+      "Date": 46220,
+      "Member ID": "M0026",
+      "Name": "AFIN",
+      "W": 4,
+      "L": 3,
+      "Diff": 6,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0015",
+      "Date": 46220,
+      "Member ID": "M0048",
+      "Name": "RICAT",
+      "W": 4,
+      "L": 3,
+      "Diff": 3,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0015",
+      "Date": 46220,
+      "Member ID": "M0007",
+      "Name": "ALDI",
+      "W": 4,
+      "L": 3,
+      "Diff": -1,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0015",
+      "Date": 46220,
+      "Member ID": "M0014",
+      "Name": "OKA",
+      "W": 3,
+      "L": 4,
+      "Diff": -1,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0015",
+      "Date": 46220,
+      "Member ID": "M0049",
+      "Name": "VARIEN",
+      "W": 2,
+      "L": 5,
+      "Diff": -7,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0015",
+      "Date": 46220,
+      "Member ID": "M0050",
+      "Name": "RELIN",
+      "W": 1,
+      "L": 6,
+      "Diff": -9,
+      "Finish": 8,
+      "Placement Bonus": 1,
+      "Attendance": 10,
+      "Event Points": 11
+    },
+    {
+      "Event ID": "E0016",
+      "Date": 46222,
+      "Member ID": "M0051",
+      "Name": "ANDRIAN",
+      "W": 6,
+      "L": 2,
+      "Diff": 7,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0016",
+      "Date": 46222,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 6,
+      "L": 2,
+      "Diff": 2,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0016",
+      "Date": 46222,
+      "Member ID": "M0052",
+      "Name": "DEVA",
+      "W": 6,
+      "L": 2,
+      "Diff": 6,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0016",
+      "Date": 46222,
+      "Member ID": "M0037",
+      "Name": "WULAN",
+      "W": 5,
+      "L": 3,
+      "Diff": 3,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0016",
+      "Date": 46222,
+      "Member ID": "M0038",
+      "Name": "TEGUH",
+      "W": 3,
+      "L": 5,
+      "Diff": -1,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0016",
+      "Date": 46222,
+      "Member ID": "M0036",
+      "Name": "NAYA",
+      "W": 1,
+      "L": 7,
+      "Diff": -1,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0017",
+      "Date": 46223,
+      "Member ID": "M0009",
+      "Name": "REVATA",
+      "W": 6,
+      "L": 2,
+      "Diff": 14,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0017",
+      "Date": 46223,
+      "Member ID": "M0007",
+      "Name": "ALDI",
+      "W": 6,
+      "L": 2,
+      "Diff": 12,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0017",
+      "Date": 46223,
+      "Member ID": "M0040",
+      "Name": "DAIVA",
+      "W": 6,
+      "L": 2,
+      "Diff": 7,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0017",
+      "Date": 46223,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 5,
+      "L": 3,
+      "Diff": 3,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0017",
+      "Date": 46223,
+      "Member ID": "M0028",
+      "Name": "RAKA S",
+      "W": 3,
+      "L": 5,
+      "Diff": -6,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0017",
+      "Date": 46223,
+      "Member ID": "M0053",
+      "Name": "ADI NUGRAHA",
+      "W": 1,
+      "L": 7,
+      "Diff": -15,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0017",
+      "Date": 46223,
+      "Member ID": "M0002",
+      "Name": "VANESS",
+      "W": 1,
+      "L": 7,
+      "Diff": -15,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0018",
+      "Date": 46224,
+      "Member ID": "M0054",
+      "Name": "ARI YUDHA",
+      "W": 5,
+      "L": 0,
+      "Diff": 15,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0018",
+      "Date": 46224,
+      "Member ID": "M0033",
+      "Name": "WILSON",
+      "W": 4,
+      "L": 1,
+      "Diff": 9,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0018",
+      "Date": 46224,
+      "Member ID": "M0055",
+      "Name": "GUSDE",
+      "W": 3,
+      "L": 2,
+      "Diff": 3,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0018",
+      "Date": 46224,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 2,
+      "L": 3,
+      "Diff": -3,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0018",
+      "Date": 46224,
+      "Member ID": "M0056",
+      "Name": "KAON H",
+      "W": 1,
+      "L": 4,
+      "Diff": -9,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0018",
+      "Date": 46224,
+      "Member ID": "M0021",
+      "Name": "MENTARI",
+      "W": 0,
+      "L": 5,
+      "Diff": -15,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0019",
+      "Date": 46226,
+      "Member ID": "M0032",
+      "Name": "PIBBLEBULAT",
+      "W": 5,
+      "L": 0,
+      "Diff": 15,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0019",
+      "Date": 46226,
+      "Member ID": "M0057",
+      "Name": "ANA DWI",
+      "W": 3,
+      "L": 2,
+      "Diff": 9,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0019",
+      "Date": 46226,
+      "Member ID": "M0003",
+      "Name": "ADHYASTA",
+      "W": 3,
+      "L": 2,
+      "Diff": 3,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0019",
+      "Date": 46226,
+      "Member ID": "M0020",
+      "Name": "SEKAR W",
+      "W": 2,
+      "L": 3,
+      "Diff": -3,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0019",
+      "Date": 46226,
+      "Member ID": "M0031",
+      "Name": "OLIVIA",
+      "W": 2,
+      "L": 3,
+      "Diff": -3,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0019",
+      "Date": 46226,
+      "Member ID": "M0021",
+      "Name": "MENTARI",
+      "W": 0,
+      "L": 5,
+      "Diff": -15,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0020",
+      "Date": 46227,
+      "Member ID": "M0052",
+      "Name": "DEVA",
+      "W": 6,
+      "L": 1,
+      "Diff": 10,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0020",
+      "Date": 46227,
+      "Member ID": "M0009",
+      "Name": "REVATA",
+      "W": 5,
+      "L": 2,
+      "Diff": 8,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0020",
+      "Date": 46227,
+      "Member ID": "M0053",
+      "Name": "ADI NUGRAHA",
+      "W": 5,
+      "L": 2,
+      "Diff": 5,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0020",
+      "Date": 46227,
+      "Member ID": "M0005",
+      "Name": "ABISEKA J",
+      "W": 4,
+      "L": 3,
+      "Diff": 3,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0020",
+      "Date": 46227,
+      "Member ID": "M0003",
+      "Name": "ADHYASTA",
+      "W": 3,
+      "L": 4,
+      "Diff": 2,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0020",
+      "Date": 46227,
+      "Member ID": "M0041",
+      "Name": "OKA (W)",
+      "W": 3,
+      "L": 4,
+      "Diff": -5,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0020",
+      "Date": 46227,
+      "Member ID": "M0058",
+      "Name": "ALBERT",
+      "W": 2,
+      "L": 5,
+      "Diff": -5,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0020",
+      "Date": 46227,
+      "Member ID": "M0002",
+      "Name": "VANESS",
+      "W": 0,
+      "L": 7,
+      "Diff": -18,
+      "Finish": 8,
+      "Placement Bonus": 1,
+      "Attendance": 10,
+      "Event Points": 11
+    },
+    {
+      "Event ID": "E0021",
+      "Date": 46229,
+      "Member ID": "M0059",
+      "Name": "Jason",
+      "W": 6,
+      "L": 2,
+      "Diff": 12,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0021",
+      "Date": 46229,
+      "Member ID": "M0060",
+      "Name": "Detha",
+      "W": 6,
+      "L": 2,
+      "Diff": 9,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0021",
+      "Date": 46229,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 5,
+      "L": 3,
+      "Diff": 5,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0021",
+      "Date": 46229,
+      "Member ID": "M0040",
+      "Name": "DAIVA",
+      "W": 5,
+      "L": 3,
+      "Diff": 3,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0021",
+      "Date": 46229,
+      "Member ID": "M0061",
+      "Name": "Vinta",
+      "W": 5,
+      "L": 3,
+      "Diff": 2,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0021",
+      "Date": 46229,
+      "Member ID": "M0002",
+      "Name": "VANESS",
+      "W": 3,
+      "L": 5,
+      "Diff": -9,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0021",
+      "Date": 46229,
+      "Member ID": "M0038",
+      "Name": "TEGUH",
+      "W": 1,
+      "L": 7,
+      "Diff": -8,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0021",
+      "Date": 46229,
+      "Member ID": "M0062",
+      "Name": "Yuvan",
+      "W": 1,
+      "L": 7,
+      "Diff": -14,
+      "Finish": 8,
+      "Placement Bonus": 1,
+      "Attendance": 10,
+      "Event Points": 11
+    },
+    {
+      "Event ID": "E0022",
+      "Date": 46230,
+      "Member ID": "M0045",
+      "Name": "BARA",
+      "W": 6,
+      "L": 1,
+      "Diff": 9,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0022",
+      "Date": 46230,
+      "Member ID": "M0063",
+      "Name": "REVIN",
+      "W": 5,
+      "L": 2,
+      "Diff": 5,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0022",
+      "Date": 46230,
+      "Member ID": "M0055",
+      "Name": "GUSDE",
+      "W": 4,
+      "L": 3,
+      "Diff": 7,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0022",
+      "Date": 46230,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 4,
+      "L": 3,
+      "Diff": 1,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0022",
+      "Date": 46230,
+      "Member ID": "M0053",
+      "Name": "ADI NUGRAHA",
+      "W": 4,
+      "L": 3,
+      "Diff": 1,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0022",
+      "Date": 46230,
+      "Member ID": "M0065",
+      "Name": "CIKA",
+      "W": 3,
+      "L": 4,
+      "Diff": -3,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Event ID": "E0022",
+      "Date": 46230,
+      "Member ID": "M0066",
+      "Name": "YUWI",
+      "W": 1,
+      "L": 6,
+      "Diff": -9,
+      "Finish": 7,
+      "Placement Bonus": 2,
+      "Attendance": 10,
+      "Event Points": 12
+    },
+    {
+      "Event ID": "E0022",
+      "Date": 46230,
+      "Member ID": "M0067",
+      "Name": "THESSA",
+      "W": 1,
+      "L": 6,
+      "Diff": -11,
+      "Finish": 8,
+      "Placement Bonus": 1,
+      "Attendance": 10,
+      "Event Points": 11
+    },
+    {
+      "Event ID": "E0023",
+      "Date": 46232,
+      "Member ID": "M0053",
+      "Name": "ADI NUGRAHA",
+      "W": 3,
+      "L": 1,
+      "Diff": 5,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0023",
+      "Date": 46232,
+      "Member ID": "M0068",
+      "Name": "ANDRE",
+      "W": 2,
+      "L": 2,
+      "Diff": 3,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0023",
+      "Date": 46232,
+      "Member ID": "M0001",
+      "Name": "HUNG",
+      "W": 2,
+      "L": 2,
+      "Diff": 2,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0023",
+      "Date": 46232,
+      "Member ID": "M0052",
+      "Name": "DEVA",
+      "W": 2,
+      "L": 2,
+      "Diff": -4,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0023",
+      "Date": 46232,
+      "Member ID": "M0012",
+      "Name": "HENRY",
+      "W": 1,
+      "L": 3,
+      "Diff": -6,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0024",
+      "Date": 46233,
+      "Member ID": "M0070",
+      "Name": "Kenzy",
+      "W": 5,
+      "L": 0,
+      "Diff": 19,
+      "Finish": 1,
+      "Placement Bonus": 25,
+      "Attendance": 10,
+      "Event Points": 35
+    },
+    {
+      "Event ID": "E0024",
+      "Date": 46233,
+      "Member ID": "M0071",
+      "Name": "Michellie",
+      "W": 4,
+      "L": 1,
+      "Diff": 9,
+      "Finish": 2,
+      "Placement Bonus": 18,
+      "Attendance": 10,
+      "Event Points": 28
+    },
+    {
+      "Event ID": "E0024",
+      "Date": 46233,
+      "Member ID": "M0072",
+      "Name": "Habib",
+      "W": 3,
+      "L": 2,
+      "Diff": 5,
+      "Finish": 3,
+      "Placement Bonus": 12,
+      "Attendance": 10,
+      "Event Points": 22
+    },
+    {
+      "Event ID": "E0024",
+      "Date": 46233,
+      "Member ID": "M0005",
+      "Name": "ABISEKA J",
+      "W": 2,
+      "L": 3,
+      "Diff": -6,
+      "Finish": 4,
+      "Placement Bonus": 8,
+      "Attendance": 10,
+      "Event Points": 18
+    },
+    {
+      "Event ID": "E0024",
+      "Date": 46233,
+      "Member ID": "M0073",
+      "Name": "Nofella",
+      "W": 1,
+      "L": 4,
+      "Diff": -14,
+      "Finish": 5,
+      "Placement Bonus": 6,
+      "Attendance": 10,
+      "Event Points": 16
+    },
+    {
+      "Event ID": "E0024",
+      "Date": 46233,
+      "Member ID": "M0074",
+      "Name": "Risa",
+      "W": 0,
+      "L": 5,
+      "Diff": -13,
+      "Finish": 6,
+      "Placement Bonus": 4,
+      "Attendance": 10,
+      "Event Points": 14
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    },
+    {
+      "Member ID": ""
+    }
+  ]
+}
