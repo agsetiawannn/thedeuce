@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import { Calendar, Clock, MapPin, ChevronLeft, Edit2, X, Trash2, Share2, Download, Link as LinkIcon } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
-import html2canvas from 'html2canvas';
+import html2canvas from 'html2canvas-pro';
 import { createPortal } from 'react-dom';
 import SessionResultGraphic from '../../Components/SessionResultGraphic';
 
