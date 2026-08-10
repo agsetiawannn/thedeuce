@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import { Calendar, Clock, MapPin, ChevronLeft, Edit2, X, Trash2, Share2, Download, Link as LinkIcon } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
-import { toPng } from 'html-to-image';
+import html2canvas from 'html2canvas';
 import { createPortal } from 'react-dom';
 import SessionResultGraphic from '../../Components/SessionResultGraphic';
 
@@ -136,14 +136,29 @@ export default function EventShow({ event, participants }) {
             const el1 = graphicRefs.current[`${resultId}_1`];
             const el2 = graphicRefs.current[`${resultId}_2`];
             if (el1 && el2) {
-                // Safari iOS workaround: call toPng multiple times to ensure images are loaded in canvas
-                // using pixelRatio: 1 to prevent iOS memory limit crashes (1080x1920 is already high res)
-                await toPng(el1, { quality: 0.8, pixelRatio: 1 });
-                await toPng(el2, { quality: 0.8, pixelRatio: 1 });
-                await new Promise(resolve => setTimeout(resolve, 300));
+                // Using html2canvas which is much more robust for iOS Safari than html-to-image
+                // It doesn't rely on SVG foreignObject, so it avoids all canvas tainting and isTrusted events.
                 
-                const dataUrl1 = await toPng(el1, { quality: 1.0, pixelRatio: 1 });
-                const dataUrl2 = await toPng(el2, { quality: 1.0, pixelRatio: 1 });
+                // Render first layout
+                const canvas1 = await html2canvas(el1, {
+                    scale: 1, // 1080x1920 is already huge
+                    useCORS: true,
+                    backgroundColor: null,
+                    logging: false
+                });
+                const dataUrl1 = canvas1.toDataURL('image/png', 1.0);
+                
+                // Yield to main thread
+                await new Promise(resolve => setTimeout(resolve, 50));
+                
+                // Render second layout
+                const canvas2 = await html2canvas(el2, {
+                    scale: 1,
+                    useCORS: true,
+                    backgroundColor: null,
+                    logging: false
+                });
+                const dataUrl2 = canvas2.toDataURL('image/png', 1.0);
                 
                 setShareDataUrls([dataUrl1, dataUrl2]);
                 setActiveSlide(0);
