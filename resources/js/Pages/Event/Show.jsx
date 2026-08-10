@@ -17,7 +17,8 @@ export default function EventShow({ event, participants }) {
     const [editingResult, setEditingResult] = useState(null);
     const [editForm, setEditForm] = useState({ wins: '', losses: '', diff: '', finish: '' });
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-    const [shareDataUrl, setShareDataUrl] = useState(null);
+    const [shareDataUrls, setShareDataUrls] = useState([]);
+    const [activeSlide, setActiveSlide] = useState(0);
     const [shareFileName, setShareFileName] = useState('');
     const [countdown, setCountdown] = useState(30 * 60);
     const [isEditMode, setIsEditMode] = useState(false);
@@ -129,17 +130,22 @@ export default function EventShow({ event, participants }) {
         });
     };
 
-    const handleDownloadGraphic = async (resultId, name, layout = 1) => {
-        setDownloadingId(`${resultId}_${layout}`);
+    const handleDownloadGraphic = async (resultId, name) => {
+        setDownloadingId(resultId);
         try {
-            const el = graphicRefs.current[`${resultId}_${layout}`];
-            if (el) {
+            const el1 = graphicRefs.current[`${resultId}_1`];
+            const el2 = graphicRefs.current[`${resultId}_2`];
+            if (el1 && el2) {
                 // Safari iOS workaround: call toPng multiple times to ensure images are loaded in canvas
-                await toPng(el, { quality: 1.0, pixelRatio: 2 });
+                await toPng(el1, { quality: 1.0, pixelRatio: 2 });
+                await toPng(el2, { quality: 1.0, pixelRatio: 2 });
                 await new Promise(resolve => setTimeout(resolve, 300));
-                const dataUrl = await toPng(el, { quality: 1.0, pixelRatio: 2 });
                 
-                setShareDataUrl(dataUrl);
+                const dataUrl1 = await toPng(el1, { quality: 1.0, pixelRatio: 2 });
+                const dataUrl2 = await toPng(el2, { quality: 1.0, pixelRatio: 2 });
+                
+                setShareDataUrls([dataUrl1, dataUrl2]);
+                setActiveSlide(0);
                 setShareFileName(`${name.replace(/\s+/g, '_')}_Session_Result.png`);
                 setIsShareModalOpen(true);
             }
@@ -151,10 +157,17 @@ export default function EventShow({ event, participants }) {
         }
     };
 
+    const handleSlideScroll = (e) => {
+        const scrollLeft = e.target.scrollLeft;
+        const width = e.target.offsetWidth;
+        const index = Math.round(scrollLeft / width);
+        setActiveSlide(index);
+    };
+
     const handleNativeShare = async () => {
-        if (!shareDataUrl) return;
+        if (shareDataUrls.length === 0) return;
         try {
-            const blob = await (await fetch(shareDataUrl)).blob();
+            const blob = await (await fetch(shareDataUrls[activeSlide])).blob();
             const file = new File([blob], shareFileName, { type: 'image/png' });
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 await navigator.share({
@@ -170,10 +183,10 @@ export default function EventShow({ event, participants }) {
     };
 
     const handleSaveImage = () => {
-        if (!shareDataUrl) return;
+        if (shareDataUrls.length === 0) return;
         const link = document.createElement('a');
         link.download = shareFileName;
-        link.href = shareDataUrl;
+        link.href = shareDataUrls[activeSlide];
         link.click();
     };
 
@@ -384,18 +397,11 @@ export default function EventShow({ event, participants }) {
                         {loggedInResult && (
                             <div className="mt-8 flex flex-row items-center justify-center space-x-4">
                                 <button 
-                                    onClick={() => handleDownloadGraphic(loggedInResult.result_id, loggedInResult.name, 1)}
-                                    disabled={downloadingId}
+                                    onClick={() => handleDownloadGraphic(loggedInResult.result_id, loggedInResult.name)}
+                                    disabled={downloadingId !== null}
                                     className="bg-white/10 hover:bg-white/20 text-white text-[10px] font-medium uppercase tracking-widest py-3 px-6 rounded-full transition-colors disabled:opacity-50 border border-white/20"
                                 >
-                                    {downloadingId === `${loggedInResult.result_id}_1` ? 'GENERATING...' : 'DOWNLOAD STYLE 1'}
-                                </button>
-                                <button 
-                                    onClick={() => handleDownloadGraphic(loggedInResult.result_id, loggedInResult.name, 2)}
-                                    disabled={downloadingId}
-                                    className="bg-white/10 hover:bg-white/20 text-white text-[10px] font-medium uppercase tracking-widest py-3 px-6 rounded-full transition-colors disabled:opacity-50 border border-white/20"
-                                >
-                                    {downloadingId === `${loggedInResult.result_id}_2` ? 'GENERATING...' : 'DOWNLOAD STYLE 2'}
+                                    {downloadingId !== null ? 'GENERATING...' : 'GENERATE SESSION RESULT'}
                                 </button>
 
                                 {/* Hidden Graphic for Generation */}
@@ -633,7 +639,7 @@ export default function EventShow({ event, participants }) {
             )}
 
             {/* Share Modal */}
-            {isShareModalOpen && shareDataUrl && createPortal(
+            {isShareModalOpen && shareDataUrls.length > 0 && createPortal(
                 <div className="fixed inset-0 z-[9999] flex flex-col bg-[#111111]">
                     {/* Header */}
                     <div className="flex items-center justify-between p-4 pt-20 border-b border-white/10 shrink-0">
@@ -649,17 +655,33 @@ export default function EventShow({ event, participants }) {
                     </div>
 
                     {/* Preview Area */}
-                    <div className="flex-1 flex items-center justify-center p-8 overflow-hidden" 
+                    <div className="flex-1 flex flex-col items-center justify-center p-8 overflow-hidden relative" 
                          style={{
                              backgroundImage: "linear-gradient(45deg, #1f1f1f 25%, transparent 25%), linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #1f1f1f 75%), linear-gradient(-45deg, transparent 75%, #1f1f1f 75%)",
                              backgroundSize: "20px 20px",
                              backgroundPosition: "0 0, 0 10px, 10px -10px, -10px 0px"
                          }}>
-                        <img 
-                            src={shareDataUrl} 
-                            alt="Session Result" 
-                            className="max-w-full max-h-full object-contain shadow-2xl" 
-                        />
+                        <div 
+                            className="flex overflow-x-auto snap-x snap-mandatory w-full h-full hide-scrollbar items-center"
+                            onScroll={handleSlideScroll}
+                        >
+                            {shareDataUrls.map((url, i) => (
+                                <div key={i} className="snap-center shrink-0 w-full h-full flex flex-col items-center justify-center px-2">
+                                    <img 
+                                        src={url} 
+                                        alt={`Session Result Style ${i+1}`} 
+                                        className="max-w-full max-h-[85%] object-contain shadow-2xl rounded" 
+                                    />
+                                    <div className="text-white/50 text-[10px] mt-4 uppercase tracking-widest font-medium">Style {i+1}</div>
+                                </div>
+                            ))}
+                        </div>
+                        
+                        <div className="flex space-x-2 mt-4 absolute bottom-4">
+                            {shareDataUrls.map((_, i) => (
+                                <div key={i} className={`w-1.5 h-1.5 rounded-full ${i === activeSlide ? 'bg-white' : 'bg-white/30'}`} />
+                            ))}
+                        </div>
                     </div>
 
                     {/* Share Action Sheet */}

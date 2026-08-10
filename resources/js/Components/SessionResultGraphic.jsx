@@ -27,7 +27,7 @@ const SessionResultGraphic = forwardRef(({
         return (
             <div 
                 ref={ref}
-                className="w-[1080px] h-[1920px] min-w-[1080px] min-h-[1920px] bg-transparent relative flex flex-col overflow-hidden justify-center items-center"
+                className="w-[1080px] h-[1920px] min-w-[1080px] min-h-[1920px] bg-[#1a1a1a] relative flex flex-col overflow-hidden justify-center items-center"
                 style={{ 
                     fontFamily: "'42dot Sans', sans-serif"
                 }}
@@ -84,13 +84,13 @@ const SessionResultGraphic = forwardRef(({
             <div className="relative z-10 flex flex-col w-full h-full p-16 justify-center items-center">
                 
                 {/* Top: Event Info */}
-                <div className="flex flex-col items-center text-center text-[#dfd6c5] shrink-0 mb-20 mt-12 w-full">
+                <div className="flex flex-col items-center text-center text-[#dfd6c5] shrink-0 mb-12 mt-4 w-full">
                     <div className="text-[36px] tracking-wide mb-2 opacity-90">{eventName || '[Event Name]'}</div>
                     <div className="text-[28px] tracking-wide text-white/70">{date || '[Event Date]'} | {location || '[Event Venue]'}</div>
                 </div>
 
                 {/* Middle Content */}
-                <div className="flex justify-center w-full shrink-0 flex-1">
+                <div className="flex justify-center w-full shrink-0 my-8">
                     <div className="flex w-full min-w-[960px] max-w-[960px] items-center justify-between">
                         
                         {/* Left Side (Wins/Losses) */}
@@ -140,7 +140,7 @@ const SessionResultGraphic = forwardRef(({
                 </div>
 
                 {/* Bottom Logo */}
-                <div className="flex justify-center w-full shrink-0 mt-20 mb-8">
+                <div className="flex justify-center w-full shrink-0 mt-8 mb-4">
                     <img crossOrigin="anonymous" src="/img/full_logo.png" alt="Logo" style={{ width: '380px', height: '380px', objectFit: 'contain', opacity: 0.9 }} />
                 </div>
                 
