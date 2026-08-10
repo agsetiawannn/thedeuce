@@ -92,10 +92,10 @@ const SessionResultGraphic = forwardRef(({
 
                 {/* Middle Content */}
                 <div className="flex justify-center w-full shrink-0 my-8">
-                    <div className="flex w-full min-w-[960px] max-w-[960px] items-center justify-between">
+                    <div className="flex items-center justify-center space-x-[80px]">
                         
                         {/* Left Side (Wins/Losses) */}
-                        <div className="relative flex items-center justify-center shrink-0 w-[420px] min-w-[420px]">
+                        <div className="relative flex items-center justify-center shrink-0 w-[420px] h-[420px]">
                             <div className="relative w-[420px] h-[420px]">
                                 {/* Diagonal line */}
                                 <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-white/80 transform -translate-y-1/2 rotate-[-30deg]"></div>
@@ -115,7 +115,7 @@ const SessionResultGraphic = forwardRef(({
                         </div>
 
                         {/* Right Side (Stats) */}
-                        <div className="flex flex-col justify-between py-6 space-y-12 shrink-0 w-[420px] min-w-[420px] pl-10">
+                        <div className="flex flex-col justify-between py-6 space-y-12 shrink-0 w-[320px]">
                             <div className="flex flex-col">
                                 <span className="text-[24px] text-white/70 mb-1">Placement</span>
                                 <div className="flex items-baseline">
@@ -129,7 +129,7 @@ const SessionResultGraphic = forwardRef(({
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-[24px] text-white/70 mb-1">Points Earned</span>
-                                <span className="text-[72px] text-[#dfd6c5] leading-none tracking-tight">+{pointsEarned}CP</span>
+                                <span className="text-[72px] text-[#dfd6c5] leading-none tracking-tight">{pointsEarned > 0 ? `+${pointsEarned}` : pointsEarned}CP</span>
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-[24px] text-white/70 mb-1">Current Tier</span>
