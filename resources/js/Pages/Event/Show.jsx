@@ -137,12 +137,13 @@ export default function EventShow({ event, participants }) {
             const el2 = graphicRefs.current[`${resultId}_2`];
             if (el1 && el2) {
                 // Safari iOS workaround: call toPng multiple times to ensure images are loaded in canvas
-                await toPng(el1, { quality: 1.0, pixelRatio: 2 });
-                await toPng(el2, { quality: 1.0, pixelRatio: 2 });
+                // using pixelRatio: 1 to prevent iOS memory limit crashes (1080x1920 is already high res)
+                await toPng(el1, { quality: 0.8, pixelRatio: 1 });
+                await toPng(el2, { quality: 0.8, pixelRatio: 1 });
                 await new Promise(resolve => setTimeout(resolve, 300));
                 
-                const dataUrl1 = await toPng(el1, { quality: 1.0, pixelRatio: 2 });
-                const dataUrl2 = await toPng(el2, { quality: 1.0, pixelRatio: 2 });
+                const dataUrl1 = await toPng(el1, { quality: 1.0, pixelRatio: 1 });
+                const dataUrl2 = await toPng(el2, { quality: 1.0, pixelRatio: 1 });
                 
                 setShareDataUrls([dataUrl1, dataUrl2]);
                 setActiveSlide(0);
@@ -395,7 +396,7 @@ export default function EventShow({ event, participants }) {
                         </div>
                         
                         {loggedInResult && (
-                            <div className="mt-8 flex flex-row items-center justify-center space-x-4">
+                            <div className="mt-8 flex items-center justify-center w-full">
                                 <button 
                                     onClick={() => handleDownloadGraphic(loggedInResult.result_id, loggedInResult.name)}
                                     disabled={downloadingId !== null}
