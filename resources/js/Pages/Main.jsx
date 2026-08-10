@@ -4,10 +4,11 @@ import { Calendar, Clock, MapPin, ChevronRight, User, QrCode, Bell } from 'lucid
 import MobileLayout, { PullContext } from '../Layouts/MobileLayout';
 import NotificationsPanel from '../Components/NotificationsPanel';
 import PopupNotification from '../Components/PopupNotification';
+import { subscribeToPushNotifications } from '../utils/pushNotifications';
 
 export default function Main({ upcomingEvent, lastSession, leaderboard, currentRank, notifications = [] }) {
     const { pullDistance, isRefreshing } = useContext(PullContext);
-    const { auth } = usePage().props;
+    const { auth, vapidPublicKey } = usePage().props;
     const user = auth?.user;
     const member = auth?.member;
 
@@ -101,7 +102,12 @@ export default function Main({ upcomingEvent, lastSession, leaderboard, currentR
                 </Link>
 
                 <button 
-                    onClick={() => setIsNotifOpen(true)}
+                    onClick={() => {
+                        setIsNotifOpen(true);
+                        if (vapidPublicKey) {
+                            subscribeToPushNotifications(vapidPublicKey);
+                        }
+                    }}
                     className="relative p-2.5 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors"
                 >
                     <Bell size={20} />

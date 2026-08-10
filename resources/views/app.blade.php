@@ -8,6 +8,7 @@
         <meta name="theme-color" content="#040906">
 
         <title inertia>The Deuce Club</title>
+        <link rel="manifest" href="/manifest.json">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">

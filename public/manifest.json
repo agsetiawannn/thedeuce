@@ -1,0 +1,21 @@
+{
+    "name": "The Deuce Club",
+    "short_name": "TDC",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#040906",
+    "theme_color": "#040906",
+    "description": "The Deuce Club - Tennis Community App",
+    "icons": [
+        {
+            "src": "/img/tab-logo.jpeg",
+            "sizes": "192x192",
+            "type": "image/jpeg"
+        },
+        {
+            "src": "/img/tab-logo.jpeg",
+            "sizes": "512x512",
+            "type": "image/jpeg"
+        }
+    ]
+}

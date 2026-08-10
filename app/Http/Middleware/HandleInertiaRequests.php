@@ -48,6 +48,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $user,
                 'member' => $member,
             ],
+            'vapidPublicKey' => config('webpush.vapid.public_key'),
             'flash' => [
                 'success' => $request->session()->get('success'),
                 'error' => $request->session()->get('error'),
