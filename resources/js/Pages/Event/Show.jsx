@@ -144,7 +144,11 @@ export default function EventShow({ event, participants }) {
                     scale: 1, // 1080x1920 is already huge
                     useCORS: true,
                     backgroundColor: null,
-                    logging: false
+                    logging: false,
+                    width: 1080,
+                    height: 1920,
+                    windowWidth: 1080,
+                    windowHeight: 1920
                 });
                 const dataUrl1 = canvas1.toDataURL('image/png', 1.0);
                 
@@ -156,7 +160,11 @@ export default function EventShow({ event, participants }) {
                     scale: 1,
                     useCORS: true,
                     backgroundColor: null,
-                    logging: false
+                    logging: false,
+                    width: 1080,
+                    height: 1920,
+                    windowWidth: 1080,
+                    windowHeight: 1920
                 });
                 const dataUrl2 = canvas2.toDataURL('image/png', 1.0);
                 
