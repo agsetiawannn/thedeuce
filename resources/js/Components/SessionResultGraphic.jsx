@@ -27,16 +27,16 @@ const SessionResultGraphic = forwardRef(({
         return (
             <div 
                 ref={ref}
-                className="w-[1080px] h-[1920px] min-w-[1080px] min-h-[1920px] bg-[#1a1a1a] relative flex flex-col overflow-hidden justify-center items-center"
+                className="w-[1080px] h-[1920px] min-w-[1080px] min-h-[1920px] bg-transparent relative flex flex-col overflow-hidden justify-center items-center"
                 style={{ 
                     fontFamily: "'42dot Sans', sans-serif"
                 }}
             >
                 <div className="flex flex-col w-full px-[140px]">
                     {/* Logo and Title */}
-                    <div className="flex items-center space-x-8 mb-28 w-full">
-                        <img crossOrigin="anonymous" src="/img/Group 35.png" alt="Logo" className="w-[110px] h-auto object-contain" />
-                        <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700 }} className="text-[#e7ddc6] text-[68px] tracking-wide mt-3">THE DEUCE CLUB</span>
+                    <div className="flex items-center space-x-6 mb-28 w-full">
+                        <img crossOrigin="anonymous" src="/img/Group 35.png" alt="Logo" className="w-[85px] h-auto object-contain" />
+                        <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700 }} className="text-[#e7ddc6] text-[54px] tracking-wide mt-2">THE DEUCE CLUB</span>
                     </div>
 
                     {/* Stats Grid */}
