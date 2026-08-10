@@ -35,7 +35,7 @@ const SessionResultGraphic = forwardRef(({
                 <div className="flex flex-col w-full px-[140px]">
                     {/* Logo and Title */}
                     <div className="flex items-center space-x-6 mb-28 w-full">
-                        <img crossOrigin="anonymous" src="/img/Group 35.png" alt="Logo" className="w-[85px] h-auto object-contain" />
+                        <img src="/img/Group 35.png" alt="Logo" className="w-[85px] h-auto object-contain" />
                         <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700 }} className="text-[#e7ddc6] text-[54px] tracking-wide mt-2">THE DEUCE CLUB</span>
                     </div>
 
@@ -141,7 +141,7 @@ const SessionResultGraphic = forwardRef(({
 
                 {/* Bottom Logo */}
                 <div className="flex justify-center w-full shrink-0 mt-8 mb-4">
-                    <img crossOrigin="anonymous" src="/img/full_logo.png" alt="Logo" style={{ width: '380px', height: '380px', objectFit: 'contain', opacity: 0.9 }} />
+                    <img src="/img/full_logo.png" alt="Logo" style={{ width: '380px', height: '380px', objectFit: 'contain', opacity: 0.9 }} />
                 </div>
                 
             </div>

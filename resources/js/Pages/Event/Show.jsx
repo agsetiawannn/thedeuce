@@ -152,7 +152,7 @@ export default function EventShow({ event, participants }) {
             }
         } catch (error) {
             console.error('Failed to generate image', error);
-            alert('Failed to generate image');
+            alert('Failed: ' + (error.message || JSON.stringify(error) || 'Unknown error'));
         } finally {
             setDownloadingId(null);
         }
@@ -406,7 +406,7 @@ export default function EventShow({ event, participants }) {
                                 </button>
 
                                 {/* Hidden Graphic for Generation */}
-                                <div className="fixed top-0 left-[-9999px] z-[-1000]">
+                                <div className="absolute top-0 left-0 opacity-0 pointer-events-none z-[-1000]">
                                     <SessionResultGraphic 
                                         ref={(el) => (graphicRefs.current[`${loggedInResult.result_id}_1`] = el)}
                                         layout={1}
