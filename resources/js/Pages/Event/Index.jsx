@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { Calendar, Clock, MapPin, ChevronRight, X } from 'lucide-react';
+import { Head, Link, useForm, router } from '@inertiajs/react';
+import { Calendar, Clock, MapPin, ChevronRight, X, Trash2 } from 'lucide-react';
 
 export default function EventIndex({ auth, events }) {
     const allowedEmails = ['anandazhou09@gmail.com', 'idabagusadhya@gmail.com', 'abiseka33@gmail.com', 'setiawan18221@gmail.com'];
@@ -85,13 +85,28 @@ export default function EventIndex({ auth, events }) {
                             </div>
                         </div>
 
-                        <Link 
-                            href={`/events/${event.event_id}`} 
-                            className="bg-[#dfd6c5] text-[#1b2622] text-[10px] font-bold px-3 py-1.5 rounded-full flex items-center space-x-1 shrink-0 shadow-sm"
-                        >
-                            <span>view details</span>
-                            <ChevronRight size={12} strokeWidth={3} />
-                        </Link>
+                        <div className="flex flex-col space-y-2">
+                            <Link 
+                                href={`/events/${event.event_id}`} 
+                                className="bg-[#dfd6c5] text-[#1b2622] text-[10px] font-bold px-3 py-1.5 rounded-full flex items-center justify-center space-x-1 shadow-sm w-full"
+                            >
+                                <span>view details</span>
+                                <ChevronRight size={12} strokeWidth={3} />
+                            </Link>
+                            {isAdmin && (
+                                <button
+                                    onClick={() => {
+                                        if (window.confirm('Are you sure you want to delete this event? If the event has ended, deleting it will also REMOVE the points and stats (wins/losses) gained by the participants in this event.')) {
+                                            router.delete(`/events/${event.event_id}`);
+                                        }
+                                    }}
+                                    className="bg-red-500/10 text-red-400 border border-red-500/20 text-[10px] font-bold px-3 py-1.5 rounded-full flex items-center justify-center space-x-1 shadow-sm w-full transition-colors hover:bg-red-500/20"
+                                >
+                                    <Trash2 size={12} strokeWidth={2.5} />
+                                    <span>delete</span>
+                                </button>
+                            )}
+                        </div>
                     </div>
                 )) : (
                     <div className="text-white text-center py-8 opacity-60">No upcoming events found.</div>

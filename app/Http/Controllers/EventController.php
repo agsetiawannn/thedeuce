@@ -87,9 +87,24 @@ class EventController extends Controller
         foreach ($results as $result) {
             $member = \App\Models\Member::where('member_id', $result->member_id)->first();
             if ($member) {
-                $member->update(['lifetime_points' => max(0, $member->lifetime_points - 10)]);
+                $pointsToDeduct = $result->event_points ?? 10;
+                $newPoints = max(0, $member->lifetime_points - $pointsToDeduct);
+                
+                $newTier = 'DIAMOND';
+                if ($newPoints >= 4500) { $newTier = 'ACE'; }
+                elseif ($newPoints >= 2000) { $newTier = 'SPADE'; }
+                elseif ($newPoints >= 1000) { $newTier = 'HEART'; }
+                elseif ($newPoints >= 350) { $newTier = 'CLUB'; }
+
+                $member->update([
+                    'lifetime_points' => $newPoints,
+                    'status_tier' => $newTier
+                ]);
             }
             $result->delete();
+            if ($member) {
+                $member->updateStats();
+            }
         }
         
         $event->delete();
@@ -145,9 +160,24 @@ class EventController extends Controller
         if ($result) {
             $member = \App\Models\Member::where('member_id', $result->member_id)->first();
             if ($member) {
-                $member->update(['lifetime_points' => max(0, $member->lifetime_points - 10)]);
+                $pointsToDeduct = $result->event_points ?? 10;
+                $newPoints = max(0, $member->lifetime_points - $pointsToDeduct);
+                
+                $newTier = 'DIAMOND';
+                if ($newPoints >= 4500) { $newTier = 'ACE'; }
+                elseif ($newPoints >= 2000) { $newTier = 'SPADE'; }
+                elseif ($newPoints >= 1000) { $newTier = 'HEART'; }
+                elseif ($newPoints >= 350) { $newTier = 'CLUB'; }
+
+                $member->update([
+                    'lifetime_points' => $newPoints,
+                    'status_tier' => $newTier
+                ]);
             }
             $result->delete();
+            if ($member) {
+                $member->updateStats();
+            }
         }
 
         return redirect()->back()->with('success', 'Participant removed.');
