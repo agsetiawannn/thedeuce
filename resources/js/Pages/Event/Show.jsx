@@ -246,7 +246,7 @@ export default function EventShow({ event, participants }) {
                 </Link>
                 <div className="flex justify-between items-center w-full">
                     <h1 className="text-white text-lg font-medium leading-tight">{event.event_name}</h1>
-                    {isAdmin && !isEnded && (
+                    {isAdmin && (
                         <button 
                             onClick={() => setIsEditMode(!isEditMode)} 
                             className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ml-2 ${isEditMode ? 'bg-[#dfd6c5] text-[#1b2622]' : 'bg-white/10 text-white'}`}
