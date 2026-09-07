@@ -181,6 +181,7 @@ export default function EventIndex({ auth, events, tab = 'upcoming' }) {
                                         <option value="Singles Social Point Play" className="text-black">Singles Social Point Play</option>
                                         <option value="Mixed Doubles/Doubles Social Point Play" className="text-black">Mixed Doubles/Doubles Social Point Play</option>
                                         <option value="Mixed Doubles/Doubles Intense Point Play" className="text-black">Mixed Doubles/Doubles Intense Point Play</option>
+                                        <option value="Fixed Partner Doubles Social Point Play" className="text-black">Fixed Partner Doubles Social Point Play</option>
                                     </select>
                                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-white/50">
                                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
