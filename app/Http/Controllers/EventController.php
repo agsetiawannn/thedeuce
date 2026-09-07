@@ -8,14 +8,24 @@ use App\Models\Event;
 
 class EventController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::whereDate('event_date', '>=', \Carbon\Carbon::now('Asia/Makassar')->toDateString())
-                       ->orderBy('event_date', 'asc')
-                       ->get();
+        $tab = $request->query('tab', 'upcoming');
+        $query = Event::query();
+
+        if ($tab === 'past') {
+            $query->whereDate('event_date', '<', \Carbon\Carbon::now('Asia/Makassar')->toDateString())
+                  ->orderBy('event_date', 'desc');
+        } else {
+            $query->whereDate('event_date', '>=', \Carbon\Carbon::now('Asia/Makassar')->toDateString())
+                  ->orderBy('event_date', 'asc');
+        }
+
+        $events = $query->get();
 
         return Inertia::render('Event/Index', [
             'events' => $events,
+            'tab' => $tab,
         ]);
     }
 
@@ -43,6 +53,7 @@ class EventController extends Controller
             'event_time' => 'required|string|max:100',
             'location' => 'required|string|max:150',
             'kuyy_link' => 'nullable|url|max:255',
+            'event_format' => 'nullable|string|in:regular,fixed_partner',
         ]);
 
         // Generate a new event_id (e.g. E0010)
@@ -59,6 +70,7 @@ class EventController extends Controller
             'event_time' => $validated['event_time'],
             'location' => $validated['location'],
             'kuyy_link' => $validated['kuyy_link'] ?? null,
+            'event_format' => $validated['event_format'] ?? 'regular',
         ]);
 
         return redirect()->route('events.index');
@@ -136,12 +148,25 @@ class EventController extends Controller
             return redirect()->route('events.show', $id)->with('error', 'You have already checked in for this event.');
         }
 
+        $team = $request->query('team');
+        $teamName = null;
+        if ($event->event_format === 'fixed_partner' && $team) {
+            $teamName = 'Team ' . $team;
+            $teamMembersCount = \App\Models\Result::where('event_id', $id)
+                ->where('team_name', $teamName)
+                ->count();
+            if ($teamMembersCount >= 2) {
+                return redirect()->route('events.show', $id)->with('error', $teamName . ' is already full.');
+            }
+        }
+
         \App\Models\Result::create([
                 'event_id' => $id,
                 'member_id' => $member->member_id,
                 'name' => $member->name,
                 'result_date' => $event->event_date,
                 'event_points' => 10,
+                'team_name' => $teamName,
             ]);
             
             // Add 10 CP to member's lifetime points using addPoints which handles tiers and notifications
@@ -208,6 +233,15 @@ class EventController extends Controller
             7 => 2,
             8 => 1,
         ];
+        
+        if ($event->event_format === 'fixed_partner') {
+            $cpMap = [
+                1 => 25,
+                2 => 12,
+                3 => 6,
+                4 => 2,
+            ];
+        }
 
         foreach ($placements as $place) {
             $result = \App\Models\Result::find($place['result_id']);
@@ -262,8 +296,13 @@ class EventController extends Controller
         $diff = $request->input('diff');
         $finish = $request->input('finish');
         
+        $event = Event::findOrFail($id);
+        
         // Handle CP differences if placement changed (Optional, simple implementation first)
         $cpMap = [1 => 25, 2 => 18, 3 => 12, 4 => 8, 5 => 6, 6 => 4, 7 => 2, 8 => 1];
+        if ($event->event_format === 'fixed_partner') {
+            $cpMap = [1 => 25, 2 => 12, 3 => 6, 4 => 2];
+        }
         $newCp = $finish ? ($cpMap[$finish] ?? 0) : 0;
         $oldCp = $result->placement_bonus;
         $cpDiff = $newCp - $oldCp;
@@ -280,10 +319,17 @@ class EventController extends Controller
         $member = \App\Models\Member::where('member_id', $result->member_id)->first();
         if ($member) {
             if ($cpDiff !== 0) {
-                // Adjust lifetime points if placement bonus changed
-                // (Using addPoints directly with positive/negative value, though addPoints notification might be weird for negatives)
-                // For a proper system, we just recalculate or update lifetime_points directly, but let's use the DB query.
-                $member->update(['lifetime_points' => $member->lifetime_points + $cpDiff]);
+                $newPoints = max(0, $member->lifetime_points + $cpDiff);
+                $newTier = 'DIAMOND';
+                if ($newPoints >= 4500) { $newTier = 'ACE'; }
+                elseif ($newPoints >= 2000) { $newTier = 'SPADE'; }
+                elseif ($newPoints >= 1000) { $newTier = 'HEART'; }
+                elseif ($newPoints >= 350) { $newTier = 'CLUB'; }
+
+                $member->update([
+                    'lifetime_points' => $newPoints,
+                    'status_tier' => $newTier
+                ]);
             }
             $member->updateStats();
         }

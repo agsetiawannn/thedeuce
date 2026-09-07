@@ -20,6 +20,7 @@ class Event extends Model
         'location',
         'status',
         'kuyy_link',
+        'event_format',
     ];
     protected $keyType = 'string';
     public $timestamps = false;

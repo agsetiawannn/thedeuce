@@ -24,7 +24,10 @@ export default function EventShow({ event, participants }) {
     const [isEditMode, setIsEditMode] = useState(false);
     const [qrToken, setQrToken] = useState(Date.now());
     const [downloadingId, setDownloadingId] = useState(null);
+    const [activeQrTeam, setActiveQrTeam] = useState(null);
     const graphicRefs = React.useRef({});
+    
+    const isFixedPartner = event?.event_format === 'fixed_partner';
     
     React.useEffect(() => {
         const interval = setInterval(() => {
@@ -218,6 +221,20 @@ export default function EventShow({ event, participants }) {
     const checkedInCount = participants ? participants.length : 0;
     const targetSlots = Math.min(MAX_PLAYERS, Math.max(8, Math.ceil(checkedInCount / 2) * 2));
     const emptySlots = Math.max(0, targetSlots - checkedInCount);
+    
+    const teams = [1, 2, 3, 4];
+    const groupedParticipants = {};
+    if (isFixedPartner) {
+        teams.forEach(t => groupedParticipants['Team ' + t] = []);
+        if (participants) {
+            participants.forEach(p => {
+                if (p.team_name) {
+                    if (!groupedParticipants[p.team_name]) groupedParticipants[p.team_name] = [];
+                    groupedParticipants[p.team_name].push(p);
+                }
+            });
+        }
+    }
 
     const isEnded = event.status === 'ended';
     
@@ -296,27 +313,61 @@ export default function EventShow({ event, participants }) {
                     <div className="mb-8 relative">
                         <h2 className="text-white text-lg font-medium mb-4">Checked In Participant</h2>
                         
-                        <div className="grid grid-cols-2 gap-3 mb-2">
-                            {participants && participants.map((p, idx) => (
-                                <div key={p.result_id} className="bg-[#dfd6c5] text-[#1b2622] text-xs font-semibold py-2 rounded-full text-center flex items-center justify-center shadow-sm truncate px-2 relative group">
-                                    <span className="truncate">{p.name}</span>
-                                    {isEditMode && (
-                                        <button 
-                                            onClick={() => deleteParticipant(p.result_id)}
-                                            className="absolute right-1 w-6 h-6 bg-[#9c3232] text-white rounded-full flex items-center justify-center"
-                                        >
-                                            <Trash2 size={12} />
-                                        </button>
-                                    )}
-                                </div>
-                            ))}
-                            
-                            {[...Array(emptySlots)].map((_, i) => (
-                                <div key={`empty-${i}`} className="bg-[#dfd6c5]/20 text-[#dfd6c5]/50 border border-dashed border-[#dfd6c5]/30 text-[10px] font-medium py-2 rounded-full text-center flex items-center justify-center">
-                                    [slot available]
-                                </div>
-                            ))}
-                        </div>
+                        {!isFixedPartner ? (
+                            <div className="grid grid-cols-2 gap-3 mb-2">
+                                {participants && participants.map((p, idx) => (
+                                    <div key={p.result_id} className="bg-[#dfd6c5] text-[#1b2622] text-xs font-semibold py-2 rounded-full text-center flex items-center justify-center shadow-sm truncate px-2 relative group">
+                                        <span className="truncate">{p.name}</span>
+                                        {isEditMode && (
+                                            <button 
+                                                onClick={() => deleteParticipant(p.result_id)}
+                                                className="absolute right-1 w-6 h-6 bg-[#9c3232] text-white rounded-full flex items-center justify-center"
+                                            >
+                                                <Trash2 size={12} />
+                                            </button>
+                                        )}
+                                    </div>
+                                ))}
+                                
+                                {[...Array(emptySlots)].map((_, i) => (
+                                    <div key={`empty-${i}`} className="bg-[#dfd6c5]/20 text-[#dfd6c5]/50 border border-dashed border-[#dfd6c5]/30 text-[10px] font-medium py-2 rounded-full text-center flex items-center justify-center">
+                                        [slot available]
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="flex flex-col space-y-4 mb-2">
+                                {teams.map(t => {
+                                    const teamName = 'Team ' + t;
+                                    const members = groupedParticipants[teamName] || [];
+                                    return (
+                                        <div key={t} className="flex flex-col space-y-2 bg-white/5 rounded-xl p-3 border border-white/10">
+                                            <div className="text-white/60 text-[10px] font-bold uppercase tracking-wider">{teamName}</div>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {members.map(p => (
+                                                    <div key={p.result_id} className="bg-[#dfd6c5] text-[#1b2622] text-xs font-semibold py-1.5 rounded-full text-center flex items-center justify-center shadow-sm truncate px-2 relative group">
+                                                        <span className="truncate">{p.name}</span>
+                                                        {isEditMode && (
+                                                            <button 
+                                                                onClick={() => deleteParticipant(p.result_id)}
+                                                                className="absolute right-1 w-5 h-5 bg-[#9c3232] text-white rounded-full flex items-center justify-center"
+                                                            >
+                                                                <Trash2 size={10} />
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                                {[...Array(Math.max(0, 2 - members.length))].map((_, i) => (
+                                                    <div key={`empty-${t}-${i}`} className="bg-[#dfd6c5]/10 text-[#dfd6c5]/40 border border-dashed border-[#dfd6c5]/20 text-[10px] font-medium py-1.5 rounded-full text-center flex items-center justify-center">
+                                                        [slot available]
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
                         
                         <div className="text-right text-[#dfd6c5] text-[9px] opacity-70 mt-3">
                             {checkedInCount} players already checked in
@@ -325,20 +376,48 @@ export default function EventShow({ event, participants }) {
                         {/* Admin Action Buttons */}
                         {isAdmin && (
                             <div className="flex flex-col mt-8 border-t border-white/10 pt-8 space-y-4">
-                                <div className="flex justify-between">
-                                    <button 
-                                        onClick={() => setIsQrModalOpen(true)}
-                                        className="bg-[#247c64] text-white text-[10px] font-medium py-2.5 px-6 rounded-lg text-center shadow-sm"
-                                    >
-                                        [generate QR]
-                                    </button>
-                                    {checkedInCount > 0 && (
-                                        <button 
-                                            onClick={() => setIsSessionEndedModalOpen(true)}
-                                            className="bg-[#9c3232] text-white text-[10px] font-medium py-2.5 px-6 rounded-lg text-center shadow-sm"
-                                        >
-                                            [end session]
-                                        </button>
+                                <div className="flex flex-col space-y-3">
+                                    {!isFixedPartner ? (
+                                        <div className="flex justify-between">
+                                            <button 
+                                                onClick={() => { setActiveQrTeam(null); setIsQrModalOpen(true); }}
+                                                className="bg-[#247c64] text-white text-[10px] font-medium py-2.5 px-6 rounded-lg text-center shadow-sm"
+                                            >
+                                                [generate QR]
+                                            </button>
+                                            {checkedInCount > 0 && (
+                                                <button 
+                                                    onClick={() => setIsSessionEndedModalOpen(true)}
+                                                    className="bg-[#9c3232] text-white text-[10px] font-medium py-2.5 px-6 rounded-lg text-center shadow-sm"
+                                                >
+                                                    [end session]
+                                                </button>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {teams.map(t => (
+                                                    <button 
+                                                        key={t}
+                                                        onClick={() => { setActiveQrTeam(t); setIsQrModalOpen(true); }}
+                                                        className="bg-[#247c64] text-white text-[9px] font-medium py-2 px-2 rounded-lg text-center shadow-sm uppercase"
+                                                    >
+                                                        [generate QR Team {t}]
+                                                    </button>
+                                                ))}
+                                            </div>
+                                            {checkedInCount > 0 && (
+                                                <div className="flex justify-end mt-2">
+                                                    <button 
+                                                        onClick={() => setIsSessionEndedModalOpen(true)}
+                                                        className="bg-[#9c3232] text-white text-[10px] font-medium py-2.5 px-6 rounded-lg text-center shadow-sm"
+                                                    >
+                                                        [end session]
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </>
                                     )}
                                 </div>
                                 {isEditMode && (
@@ -364,58 +443,126 @@ export default function EventShow({ event, participants }) {
                                 <div className="text-white/60 text-sm text-center py-4">No participants found.</div>
                             )}
                             
-                            {finalResults.map((result) => {
-                                const rank = result.finish;
-                                const isTop3 = rank <= 3;
-                                
-                                let clubColor = '#dfd6c5'; // default
-                                if (rank === 1) clubColor = '#d4af37'; // gold
-                                if (rank === 2) clubColor = '#c0c0c0'; // silver
-                                if (rank === 3) clubColor = '#cd7f32'; // bronze
+                            {!isFixedPartner ? (
+                                finalResults.map((result) => {
+                                    const rank = result.finish;
+                                    const isTop3 = rank <= 3;
+                                    
+                                    let clubColor = '#dfd6c5'; // default
+                                    if (rank === 1) clubColor = '#d4af37'; // gold
+                                    if (rank === 2) clubColor = '#c0c0c0'; // silver
+                                    if (rank === 3) clubColor = '#cd7f32'; // bronze
 
-                                return (
-                                    <div key={result.result_id} className="flex items-center justify-between text-white text-sm">
-                                        <div className="flex items-center space-x-4 w-2/3">
-                                            {isTop3 ? (
-                                                <span className="text-xs font-bold w-4 text-center" style={{ color: clubColor }}>♣</span>
-                                            ) : (
-                                                <span className="text-[#dfd6c5] text-[10px] w-4 text-center">{rank}{getFinishSuffix(rank)}</span>
-                                            )}
-                                            
-                                            {result.member?.user?.avatar ? (
-                                                <img src={result.member.user.avatar} alt={result.name} className={`w-5 h-5 rounded-full shrink-0 ${!isTop3 ? 'opacity-80' : ''}`} />
-                                            ) : (
-                                                <div className={`w-5 h-5 bg-[#dfd6c5] rounded-full shrink-0 ${!isTop3 ? 'opacity-80' : ''}`}></div>
-                                            )}
-                                            
-                                            <span className={isTop3 ? 'font-medium' : ''}>{result.name}</span>
+                                    return (
+                                        <div key={result.result_id} className="flex items-center justify-between text-white text-sm">
+                                            <div className="flex items-center space-x-4 w-2/3">
+                                                {isTop3 ? (
+                                                    <span className="text-xs font-bold w-4 text-center" style={{ color: clubColor }}>♣</span>
+                                                ) : (
+                                                    <span className="text-[#dfd6c5] text-[10px] w-4 text-center">{rank}{getFinishSuffix(rank)}</span>
+                                                )}
+                                                
+                                                {result.member?.user?.avatar ? (
+                                                    <img src={result.member.user.avatar} alt={result.name} className={`w-5 h-5 rounded-full shrink-0 ${!isTop3 ? 'opacity-80' : ''}`} />
+                                                ) : (
+                                                    <div className={`w-5 h-5 bg-[#dfd6c5] rounded-full shrink-0 ${!isTop3 ? 'opacity-80' : ''}`}></div>
+                                                )}
+                                                
+                                                <span className={isTop3 ? 'font-medium' : ''}>{result.name}</span>
+                                            </div>
+                                            <div className="flex items-center space-x-3">
+                                                <span className="text-[10px] text-white/50 w-[85px] text-right font-mono tracking-tighter">
+                                                    {result.wins || 0}W {result.losses || 0}L {(result.diff && result.diff > 0 ? '+' : '')}{result.diff || 0}DIFF
+                                                </span>
+                                                <span className={`w-[30px] text-right whitespace-nowrap ${isTop3 ? 'font-semibold' : 'font-medium text-[#dfd6c5]'}`}>{result.placement_bonus || 0} CP</span>
+                                                {isAdmin && isEditMode && (
+                                                    <button 
+                                                        onClick={() => {
+                                                            setEditingResult(result);
+                                                            setEditForm({
+                                                                wins: result.wins !== null && result.wins !== undefined ? result.wins : '',
+                                                                losses: result.losses !== null && result.losses !== undefined ? result.losses : '',
+                                                                diff: result.diff !== null && result.diff !== undefined ? result.diff : '',
+                                                                finish: result.finish !== null && result.finish !== undefined ? result.finish : ''
+                                                            });
+                                                            setIsEditResultModalOpen(true);
+                                                        }}
+                                                        className="w-5 h-5 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-md shrink-0 ml-1"
+                                                    >
+                                                        <Edit2 size={10} />
+                                                    </button>
+                                                )}
+                                            </div>
                                         </div>
-                                        <div className="flex items-center space-x-3">
-                                            <span className="text-[10px] text-white/50 w-[85px] text-right font-mono tracking-tighter">
-                                                {result.wins || 0}W {result.losses || 0}L {(result.diff && result.diff > 0 ? '+' : '')}{result.diff || 0}DIFF
-                                            </span>
-                                            <span className={`w-[30px] text-right whitespace-nowrap ${isTop3 ? 'font-semibold' : 'font-medium text-[#dfd6c5]'}`}>{result.placement_bonus || 0} CP</span>
-                                            {isAdmin && isEditMode && (
-                                                <button 
-                                                    onClick={() => {
-                                                        setEditingResult(result);
-                                                        setEditForm({
-                                                            wins: result.wins !== null && result.wins !== undefined ? result.wins : '',
-                                                            losses: result.losses !== null && result.losses !== undefined ? result.losses : '',
-                                                            diff: result.diff !== null && result.diff !== undefined ? result.diff : '',
-                                                            finish: result.finish !== null && result.finish !== undefined ? result.finish : ''
-                                                        });
-                                                        setIsEditResultModalOpen(true);
-                                                    }}
-                                                    className="w-5 h-5 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-md shrink-0 ml-1"
-                                                >
-                                                    <Edit2 size={10} />
-                                                </button>
-                                            )}
+                                    );
+                                })
+                            ) : (
+                                Object.values(finalResults.reduce((acc, result) => {
+                                    if (result.team_name) {
+                                        if (!acc[result.team_name]) acc[result.team_name] = [];
+                                        acc[result.team_name].push(result);
+                                    }
+                                    return acc;
+                                }, {})).sort((a, b) => (a[0]?.finish || 99) - (b[0]?.finish || 99)).map(members => {
+                                    const firstRep = members[0];
+                                    const rank = firstRep.finish;
+                                    const isTop3 = rank <= 3;
+                                    
+                                    let clubColor = '#dfd6c5'; // default
+                                    if (rank === 1) clubColor = '#d4af37'; // gold
+                                    if (rank === 2) clubColor = '#c0c0c0'; // silver
+                                    if (rank === 3) clubColor = '#cd7f32'; // bronze
+                                    
+                                    return (
+                                        <div key={firstRep.team_name} className="flex items-center justify-between text-white text-sm bg-white/5 p-3 rounded-xl border border-white/5">
+                                            <div className="flex items-center space-x-3 w-3/5 pr-2">
+                                                {isTop3 ? (
+                                                    <span className="text-xs font-bold w-4 text-center shrink-0" style={{ color: clubColor }}>♣</span>
+                                                ) : (
+                                                    <span className="text-[#dfd6c5] text-[10px] w-4 text-center shrink-0">{rank}{getFinishSuffix(rank)}</span>
+                                                )}
+                                                
+                                                <div className="flex flex-col space-y-1 overflow-hidden">
+                                                    <span className="text-white/40 text-[8px] font-bold uppercase tracking-wider leading-none">{firstRep.team_name}</span>
+                                                    <span className={`${isTop3 ? 'font-semibold' : 'font-medium text-[#dfd6c5]'} text-xs leading-tight truncate`} style={{ color: isTop3 ? clubColor : undefined }}>
+                                                        {members.map(m => m.name).join(' & ')}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="flex flex-col items-end space-y-1 w-2/5 shrink-0">
+                                                <div className="flex items-center space-x-2">
+                                                    <span className="text-[9px] text-white/50 font-mono tracking-tighter">
+                                                        {firstRep.wins || 0}W {firstRep.losses || 0}L {(firstRep.diff && firstRep.diff > 0 ? '+' : '')}{firstRep.diff || 0}DIFF
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center space-x-2">
+                                                    <span className={`text-xs ${isTop3 ? 'font-bold' : 'font-medium text-[#dfd6c5]'}`} style={{ color: isTop3 ? clubColor : undefined }}>
+                                                        {firstRep.placement_bonus || 0} CP / plyr
+                                                    </span>
+                                                    {isAdmin && isEditMode && (
+                                                        <button 
+                                                            onClick={() => {
+                                                                // Edit first rep
+                                                                setEditingResult(firstRep);
+                                                                setEditForm({
+                                                                    wins: firstRep.wins !== null && firstRep.wins !== undefined ? firstRep.wins : '',
+                                                                    losses: firstRep.losses !== null && firstRep.losses !== undefined ? firstRep.losses : '',
+                                                                    diff: firstRep.diff !== null && firstRep.diff !== undefined ? firstRep.diff : '',
+                                                                    finish: firstRep.finish !== null && firstRep.finish !== undefined ? firstRep.finish : ''
+                                                                });
+                                                                setIsEditResultModalOpen(true);
+                                                            }}
+                                                            className="w-5 h-5 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-md shrink-0 ml-1"
+                                                        >
+                                                            <Edit2 size={10} />
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })
+                            )}
                         </div>
                         
                         {loggedInResult && (
@@ -490,7 +637,7 @@ export default function EventShow({ event, participants }) {
                         
                         <div className="bg-[#d9d9d9] w-full aspect-square rounded-xl flex items-center justify-center shadow-inner mb-6 relative overflow-hidden">
                             <QRCodeSVG 
-                                value={`${window.location.origin}/events/${event.event_id}/checkin?t=${qrToken}`} 
+                                value={`${window.location.origin}/events/${event.event_id}/checkin?t=${qrToken}${activeQrTeam ? "&team="+activeQrTeam : ""}`} 
                                 size={240} 
                                 bgColor="#d9d9d9" 
                                 fgColor="#0c0c0c" 
@@ -523,59 +670,111 @@ export default function EventShow({ event, participants }) {
                         </div>
                         
                         <div className="flex flex-col space-y-3 mb-8">
-                            {participants && participants.map((p) => (
-                                <div key={p.result_id} className="grid grid-cols-12 items-center gap-1">
-                                    <div className="col-span-3 flex items-center space-x-1.5 truncate pr-1">
-                                        {p.member?.user?.avatar ? (
-                                            <img src={p.member.user.avatar} className="w-[14px] h-[14px] rounded-full shrink-0" alt="avatar" />
-                                        ) : (
-                                            <div className="w-[14px] h-[14px] bg-white/80 rounded-full shrink-0"></div>
-                                        )}
-                                        <span className="text-white text-[10px] font-medium truncate">{p.name}</span>
+                            {!isFixedPartner ? (
+                                participants && participants.map((p) => (
+                                    <div key={p.result_id} className="grid grid-cols-12 items-center gap-1">
+                                        <div className="col-span-3 flex items-center space-x-1.5 truncate pr-1">
+                                            {p.member?.user?.avatar ? (
+                                                <img src={p.member.user.avatar} className="w-[14px] h-[14px] rounded-full shrink-0" alt="avatar" />
+                                            ) : (
+                                                <div className="w-[14px] h-[14px] bg-white/80 rounded-full shrink-0"></div>
+                                            )}
+                                            <span className="text-white text-[10px] font-medium truncate">{p.name}</span>
+                                        </div>
+                                        <div className="col-span-2">
+                                            <input 
+                                                type="number" min="0" placeholder="0"
+                                                value={placements[p.result_id]?.wins !== undefined ? placements[p.result_id].wins : ''}
+                                                onChange={(e) => handleResultChange(p.result_id, 'wins', e.target.value)}
+                                                className="w-full bg-black/30 rounded border border-white/10 text-white text-xs py-1 px-1 focus:ring-1 focus:ring-white/50 text-center"
+                                            />
+                                        </div>
+                                        <div className="col-span-2">
+                                            <input 
+                                                type="number" min="0" placeholder="0"
+                                                value={placements[p.result_id]?.losses !== undefined ? placements[p.result_id].losses : ''}
+                                                onChange={(e) => handleResultChange(p.result_id, 'losses', e.target.value)}
+                                                className="w-full bg-black/30 rounded border border-white/10 text-white text-xs py-1 px-1 focus:ring-1 focus:ring-white/50 text-center"
+                                            />
+                                        </div>
+                                        <div className="col-span-2">
+                                            <input 
+                                                type="number" placeholder="0"
+                                                value={placements[p.result_id]?.diff !== undefined ? placements[p.result_id].diff : ''}
+                                                onChange={(e) => handleResultChange(p.result_id, 'diff', e.target.value)}
+                                                className="w-full bg-black/30 rounded border border-white/10 text-white text-xs py-1 px-1 focus:ring-1 focus:ring-white/50 text-center"
+                                            />
+                                        </div>
+                                        <div className="col-span-3">
+                                            <select 
+                                                value={placements[p.result_id]?.finish || ''}
+                                                onChange={(e) => handleResultChange(p.result_id, 'finish', e.target.value)}
+                                                className="w-full bg-black/30 rounded border border-white/10 text-white text-xs py-1 px-1 focus:ring-1 focus:ring-white/50"
+                                            >
+                                                <option value="">-</option>
+                                                {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].map(n => <option key={n} value={n}>{n}</option>)}
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div className="col-span-2">
-                                        <input 
-                                            type="number"
-                                            min="0"
-                                            placeholder="0"
-                                            value={placements[p.result_id]?.wins !== undefined ? placements[p.result_id].wins : ''}
-                                            onChange={(e) => handleResultChange(p.result_id, 'wins', e.target.value)}
-                                            className="w-full bg-black/30 rounded border border-white/10 text-white text-xs py-1 px-1 focus:ring-1 focus:ring-white/50 text-center"
-                                        />
-                                    </div>
-                                    <div className="col-span-2">
-                                        <input 
-                                            type="number"
-                                            min="0"
-                                            placeholder="0"
-                                            value={placements[p.result_id]?.losses !== undefined ? placements[p.result_id].losses : ''}
-                                            onChange={(e) => handleResultChange(p.result_id, 'losses', e.target.value)}
-                                            className="w-full bg-black/30 rounded border border-white/10 text-white text-xs py-1 px-1 focus:ring-1 focus:ring-white/50 text-center"
-                                        />
-                                    </div>
-                                    <div className="col-span-2">
-                                        <input 
-                                            type="number"
-                                            placeholder="0"
-                                            value={placements[p.result_id]?.diff !== undefined ? placements[p.result_id].diff : ''}
-                                            onChange={(e) => handleResultChange(p.result_id, 'diff', e.target.value)}
-                                            className="w-full bg-black/30 rounded border border-white/10 text-white text-xs py-1 px-1 focus:ring-1 focus:ring-white/50 text-center"
-                                        />
-                                    </div>
-                                    <div className="col-span-3">
-                                        <select 
-                                            value={placements[p.result_id]?.finish || ''}
-                                            onChange={(e) => handleResultChange(p.result_id, 'finish', e.target.value)}
-                                            className="w-full bg-black/30 rounded border border-white/10 text-white text-xs py-1 px-1 focus:ring-1 focus:ring-white/50"
-                                        >
-                                            <option value="">-</option>
-                                            {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].map(n => (
-                                                <option key={n} value={n}>{n}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                </div>
-                            ))}
+                                ))
+                            ) : (
+                                teams.filter(t => groupedParticipants['Team '+t] && groupedParticipants['Team '+t].length > 0).map(t => {
+                                    const teamName = 'Team ' + t;
+                                    const members = groupedParticipants[teamName];
+                                    const firstRep = members[0];
+                                    
+                                    const handleTeamResultChange = (field, value) => {
+                                        members.forEach(m => {
+                                            handleResultChange(m.result_id, field, value);
+                                        });
+                                    };
+                                    
+                                    return (
+                                        <div key={teamName} className="grid grid-cols-12 items-center gap-1 border-b border-white/5 pb-2">
+                                            <div className="col-span-3 flex flex-col justify-center space-y-0.5 truncate pr-1">
+                                                <div className="text-white/40 text-[8px] uppercase">{teamName}</div>
+                                                <span className="text-white text-[9px] font-medium leading-tight break-words whitespace-normal">
+                                                    {members.map(m => m.name).join(' & ')}
+                                                </span>
+                                            </div>
+                                            <div className="col-span-2">
+                                                <input 
+                                                    type="number" min="0" placeholder="0"
+                                                    value={placements[firstRep.result_id]?.wins !== undefined ? placements[firstRep.result_id].wins : ''}
+                                                    onChange={(e) => handleTeamResultChange('wins', e.target.value)}
+                                                    className="w-full bg-black/30 rounded border border-white/10 text-white text-xs py-1 px-1 focus:ring-1 focus:ring-white/50 text-center"
+                                                />
+                                            </div>
+                                            <div className="col-span-2">
+                                                <input 
+                                                    type="number" min="0" placeholder="0"
+                                                    value={placements[firstRep.result_id]?.losses !== undefined ? placements[firstRep.result_id].losses : ''}
+                                                    onChange={(e) => handleTeamResultChange('losses', e.target.value)}
+                                                    className="w-full bg-black/30 rounded border border-white/10 text-white text-xs py-1 px-1 focus:ring-1 focus:ring-white/50 text-center"
+                                                />
+                                            </div>
+                                            <div className="col-span-2">
+                                                <input 
+                                                    type="number" placeholder="0"
+                                                    value={placements[firstRep.result_id]?.diff !== undefined ? placements[firstRep.result_id].diff : ''}
+                                                    onChange={(e) => handleTeamResultChange('diff', e.target.value)}
+                                                    className="w-full bg-black/30 rounded border border-white/10 text-white text-xs py-1 px-1 focus:ring-1 focus:ring-white/50 text-center"
+                                                />
+                                            </div>
+                                            <div className="col-span-3">
+                                                <select 
+                                                    value={placements[firstRep.result_id]?.finish || ''}
+                                                    onChange={(e) => handleTeamResultChange('finish', e.target.value)}
+                                                    className="w-full bg-black/30 rounded border border-white/10 text-white text-xs py-1 px-1 focus:ring-1 focus:ring-white/50"
+                                                >
+                                                    <option value="">-</option>
+                                                    {[1,2,3,4].map(n => <option key={n} value={n}>{n}</option>)}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            )}
                         </div>
                         
                         <div className="flex justify-center mt-6">

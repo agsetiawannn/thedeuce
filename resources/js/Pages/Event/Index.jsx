@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Head, Link, useForm, router } from '@inertiajs/react';
 import { Calendar, Clock, MapPin, ChevronRight, X, Trash2 } from 'lucide-react';
 
-export default function EventIndex({ auth, events }) {
+export default function EventIndex({ auth, events, tab = 'upcoming' }) {
     const allowedEmails = ['anandazhou09@gmail.com', 'idabagusadhya@gmail.com', 'abiseka33@gmail.com', 'setiawan18221@gmail.com'];
     const isAdmin = auth?.user?.email && allowedEmails.includes(auth.user.email.toLowerCase());
 
@@ -14,6 +14,7 @@ export default function EventIndex({ auth, events }) {
         end_time: '',
         location: '',
         kuyy_link: '',
+        event_format: 'regular',
     });
 
     const submit = (e) => {
@@ -40,18 +41,26 @@ export default function EventIndex({ auth, events }) {
             <div className="pt-4 pb-6">
                 <div className="flex justify-between items-center mb-8">
                     <h1 className="text-white text-xl font-medium">Event List</h1>
-                    {/* Admin Add Event Button */}
+                    {/* Admin Actions */}
                     {isAdmin && (
-                        <button 
-                            onClick={() => setIsModalOpen(true)}
-                            className="bg-white/10 text-white text-[10px] px-3 py-1.5 rounded-full flex items-center shadow-sm"
-                        >
-                            + Add Event
-                        </button>
+                        <div className="flex space-x-2">
+                            <Link 
+                                href={tab === 'upcoming' ? '/events?tab=past' : '/events'}
+                                className="bg-white/10 text-white text-[10px] px-3 py-1.5 rounded-full flex items-center shadow-sm"
+                            >
+                                {tab === 'upcoming' ? 'Past Events' : 'Upcoming Events'}
+                            </Link>
+                            <button 
+                                onClick={() => setIsModalOpen(true)}
+                                className="bg-white/10 text-white text-[10px] px-3 py-1.5 rounded-full flex items-center shadow-sm"
+                            >
+                                + Add Event
+                            </button>
+                        </div>
                     )}
                 </div>
                 {events && events.length > 0 && (
-                    <h2 className="text-[#dfd6c5] text-lg font-medium">Upcoming Event</h2>
+                    <h2 className="text-[#dfd6c5] text-lg font-medium">{tab === 'past' ? 'Past Event' : 'Upcoming Event'}</h2>
                 )}
             </div>
 
@@ -109,7 +118,9 @@ export default function EventIndex({ auth, events }) {
                         </div>
                     </div>
                 )) : (
-                    <div className="text-white text-center py-8 opacity-60">No upcoming events found.</div>
+                    <div className="text-white text-center py-8 opacity-60">
+                        {tab === 'past' ? 'No past events found.' : 'No upcoming events found.'}
+                    </div>
                 )}
             </div>
 
@@ -135,6 +146,27 @@ export default function EventIndex({ auth, events }) {
                         <h2 className="text-white text-lg font-medium mb-6">Add New Event</h2>
                         
                         <form onSubmit={submit} className="flex flex-col space-y-4">
+                            <div className="mb-4">
+                                <label className="text-white/60 text-xs mb-1 block">Event Format</label>
+                                <div className="relative">
+                                    <select 
+                                        value={data.event_format}
+                                        onChange={e => setData('event_format', e.target.value)}
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-[#d4af37] min-h-[44px] appearance-none"
+                                        required
+                                    >
+                                        <option value="regular" className="text-black">Regular</option>
+                                        <option value="fixed_partner" className="text-black">Fixed Partner</option>
+                                    </select>
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-white/50">
+                                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                {errors.event_format && <span className="text-red-400 text-[10px] mt-1">{errors.event_format}</span>}
+                            </div>
+                            
                             <div>
                                 <label className="text-white/60 text-xs mb-1 block">Event Name</label>
                                 <div className="relative">
