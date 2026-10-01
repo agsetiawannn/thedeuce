@@ -248,7 +248,6 @@ export default function Main({ upcomingEvent, lastSession, leaderboard, currentR
 
                     <div className="flex flex-col mt-4">
                         <span className="text-[#dfd6c5] text-[11px] opacity-80">coming soon</span>
-                        <span className="text-[#dfd6c5] text-xs font-semibold mt-0.5">October 2026</span>
                     </div>
                 </div>
             </div>

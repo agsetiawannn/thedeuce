@@ -158,7 +158,6 @@ export default function Profile({ sessionJoined, currentRank, totalWins, totalLo
                     <span className="text-[#dfd6c5] text-[11px] font-medium opacity-90">League Stats</span>
                     <div className="flex flex-col items-center justify-center flex-1 h-full pt-4">
                         <span className="text-[#dfd6c5] text-[12px] opacity-80 uppercase tracking-widest font-semibold">coming soon</span>
-                        <span className="text-[#dfd6c5] text-[10px] opacity-60 mt-1">October 2026</span>
                     </div>
                 </div>
 
