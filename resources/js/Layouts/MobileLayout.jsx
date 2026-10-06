@@ -164,13 +164,15 @@ export default function MobileLayout({ children, customTranslate = false }) {
             </div>
             
             {/* Global Bottom Navbar */}
-            <BottomNav activeTab={
-                url === '/' || url.startsWith('/tier') || url.startsWith('/leaderboard') ? 'home' :
-                url.startsWith('/event') ? 'events' :
-                url.startsWith('/check-in') ? 'checkin' :
-                url.startsWith('/profile') || url.startsWith('/history') ? 'profile' :
-                'home'
-            } />
+            {!url.startsWith('/login') && (
+                <BottomNav activeTab={
+                    url === '/' || url.startsWith('/tier') || url.startsWith('/leaderboard') ? 'home' :
+                    url.startsWith('/event') ? 'events' :
+                    url.startsWith('/check-in') ? 'checkin' :
+                    url.startsWith('/profile') || url.startsWith('/history') ? 'profile' :
+                    'home'
+                } />
+            )}
         </div>
     );
 }
