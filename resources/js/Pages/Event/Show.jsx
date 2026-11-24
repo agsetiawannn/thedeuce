@@ -257,236 +257,274 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
         });
     };
 
-    // Shared drawFrame function for canvas preview & download
-    const drawFrame = (canvas, img, frameNum) => {
+    const loadImg = (url) => new Promise((resolve) => {
+        const im = new window.Image();
+        im.crossOrigin = 'anonymous';
+        im.onload = () => resolve(im);
+        im.onerror = () => resolve(null);
+        im.src = url;
+    });
+
+    // Shared drawFrame function for canvas preview & download matching Figma nodes 48-117 & 48-87
+    const drawFrame = async (canvas, userImg, frameNum) => {
+        if (!canvas) return;
+        if (document.fonts && document.fonts.ready) {
+            await document.fonts.ready;
+        }
         const W = 1080, H = 1920;
         canvas.width = W;
         canvas.height = H;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        if (frameNum === 1) {
-            // Frame 1: Today's Podium
-            ctx.fillStyle = '#0a100d';
-            ctx.fillRect(0, 0, W, H);
+        // 1. Draw user photo covering full canvas (object-cover)
+        const imgRatio = userImg.width / userImg.height;
+        const canvasRatio = W / H;
+        let dW, dH, dX, dY;
+        if (imgRatio > canvasRatio) {
+            dH = H;
+            dW = H * imgRatio;
+            dX = (W - dW) / 2;
+            dY = 0;
+        } else {
+            dW = W;
+            dH = W / imgRatio;
+            dX = 0;
+            dY = (H - dH) / 2;
+        }
+        ctx.drawImage(userImg, dX, dY, dW, dH);
 
-            // Draw Photo in center-upper region
-            const photoAreaY = 0;
-            const photoAreaH = H * 0.52;
-            const imgRatio = img.width / img.height;
-            const areaRatio = W / photoAreaH;
-            let drawW, drawH, drawX, drawY;
-            if (imgRatio > areaRatio) {
-                drawH = photoAreaH;
-                drawW = photoAreaH * imgRatio;
-                drawX = (W - drawW) / 2;
-                drawY = photoAreaY;
-            } else {
-                drawW = W;
-                drawH = W / imgRatio;
-                drawX = 0;
-                drawY = photoAreaY + (photoAreaH - drawH) / 2;
+        // 2. Gradients overlay (exact Figma values)
+        // Top gradient: from black at top fading to transparent at y ~ 750px
+        const topGrad = ctx.createLinearGradient(0, 0, 0, 750);
+        topGrad.addColorStop(0, 'rgba(0, 0, 0, 0.96)');
+        topGrad.addColorStop(0.35, 'rgba(0, 0, 0, 0.75)');
+        topGrad.addColorStop(0.7, 'rgba(0, 0, 0, 0.3)');
+        topGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = topGrad;
+        ctx.fillRect(0, 0, W, 750);
+
+        // Bottom gradient: from transparent at y = 1150px fading to black at bottom
+        const botGrad = ctx.createLinearGradient(0, 1150, 0, H);
+        botGrad.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        botGrad.addColorStop(0.35, 'rgba(0, 0, 0, 0.45)');
+        botGrad.addColorStop(0.75, 'rgba(0, 0, 0, 0.88)');
+        botGrad.addColorStop(1, 'rgba(0, 0, 0, 0.98)');
+        ctx.fillStyle = botGrad;
+        ctx.fillRect(0, 1150, W, H - 1150);
+
+        if (frameNum === 1) {
+            // Frame 1: Today's Podium (node 48-87)
+            const [whiteClub, goldClub, silverClub, bronzeClub, tdcLogo] = await Promise.all([
+                loadImg('/img/frames/frame1_white_club.svg'),
+                loadImg('/img/frames/frame1_gold_club.svg'),
+                loadImg('/img/frames/frame1_silver_club.svg'),
+                loadImg('/img/frames/frame1_bronze_club.svg'),
+                loadImg('/img/frames/frame1_tdc_logo.svg'),
+            ]);
+
+            // Dark green box for "today's"
+            ctx.fillStyle = '#0d3127';
+            ctx.fillRect(402.58, 199, 222.87, 83.26);
+
+            // White tilted club icon behind "podium" badge
+            if (whiteClub) {
+                ctx.save();
+                ctx.translate(680, 225);
+                ctx.rotate(-10.94 * Math.PI / 180);
+                ctx.drawImage(whiteClub, -88, -89, 176, 178);
+                ctx.restore();
             }
 
-            ctx.save();
-            ctx.beginPath();
-            ctx.rect(0, photoAreaY, W, photoAreaH);
-            ctx.clip();
-            ctx.drawImage(img, drawX, drawY, drawW, drawH);
-            
-            // Vignette gradient fade to black at bottom of photo
-            const fadeGrad = ctx.createLinearGradient(0, photoAreaH - 220, 0, photoAreaH);
-            fadeGrad.addColorStop(0, 'rgba(10,16,13,0)');
-            fadeGrad.addColorStop(1, 'rgba(10,16,13,1)');
-            ctx.fillStyle = fadeGrad;
-            ctx.fillRect(0, photoAreaH - 220, W, 220);
-            ctx.restore();
-
-            // White Club Logo
-            const logoY = photoAreaH + 40;
+            // Text "today’s"
             ctx.fillStyle = '#ffffff';
-            ctx.font = '70px serif';
+            ctx.font = "500 51.7px '42dot Sans', sans-serif";
             ctx.textAlign = 'center';
-            ctx.fillText('♣', W/2 + 90, logoY);
+            ctx.fillText("today’s", 514.5, 258);
 
-            // "today's" tag in angled badge
+            // Lighter green box for "podium" (rotated -5.14 deg)
             ctx.save();
-            ctx.translate(W/2 - 70, logoY - 15);
-            ctx.rotate(-0.04);
-            ctx.fillStyle = '#173f30';
-            roundRect(ctx, -85, -28, 170, 52, 10);
-            ctx.fill();
-            ctx.fillStyle = '#ffffff';
-            ctx.font = "bold 32px 'Inter', sans-serif";
-            ctx.textAlign = 'center';
-            ctx.fillText("today's", 0, 8);
-            ctx.restore();
+            ctx.translate(595.2, 313.4);
+            ctx.rotate(-5.14 * Math.PI / 180);
+            ctx.fillStyle = '#087456';
+            ctx.fillRect(-111.4, -41.6, 222.87, 83.26);
 
-            // "podium" tag in green badge
-            ctx.save();
-            ctx.translate(W/2 + 20, logoY + 35);
-            ctx.rotate(0.02);
-            ctx.fillStyle = '#1b7454';
-            roundRect(ctx, -95, -28, 190, 54, 10);
-            ctx.fill();
+            // Text "podium"
             ctx.fillStyle = '#ffffff';
-            ctx.font = "bold 34px 'Inter', sans-serif";
+            ctx.font = "500 51.7px '42dot Sans', sans-serif";
             ctx.textAlign = 'center';
-            ctx.fillText("podium", 0, 9);
+            ctx.fillText("podium", 0, 18);
             ctx.restore();
 
             // Table headers
-            const tableY = logoY + 120;
-            ctx.fillStyle = '#dfd6c5';
-            ctx.font = "600 24px 'Inter', sans-serif";
+            ctx.fillStyle = '#ffffff';
+            ctx.font = "500 32px '42dot Sans', sans-serif";
+            ctx.textAlign = 'center';
+            ctx.fillText("name", 207.5, 435);
+            ctx.fillText("W-L", 700, 435);
             ctx.textAlign = 'left';
-            ctx.fillText('name', 70, tableY);
-            ctx.textAlign = 'right';
-            ctx.fillText('W-L', W - 320, tableY);
-            ctx.fillText('+/-', W - 200, tableY);
-            ctx.fillText('points', W - 70, tableY);
+            ctx.fillText("+/-", 784, 435);
+            ctx.fillText("points", 881, 435);
 
-            // Podium rows
+            // Sort results
             const sortedResults = participants ? [...participants].sort((a, b) => (a.finish || 99) - (b.finish || 99)) : [];
-            const top3 = sortedResults.slice(0, 3);
-            const barStyles = [
-                { bg: '#173f30', text: '#dfd6c5', club: '#d4af37' },
-                { bg: '#dfd6c5', text: '#111a15', club: '#8a928e' },
-                { bg: '#c9beab', text: '#111a15', club: '#b06d3b' },
+            const top3 = [sortedResults[0] || null, sortedResults[1] || null, sortedResults[2] || null];
+            const barConfigs = [
+                { bg: 'rgba(13, 49, 39, 0.88)', text: '#dfd6c5', club: goldClub, y: 459 },
+                { bg: 'rgba(242, 237, 227, 0.88)', text: '#17211d', club: silverClub, y: 533 },
+                { bg: 'rgba(242, 237, 227, 0.88)', text: '#17211d', club: bronzeClub, y: 607 },
             ];
 
-            for (let i = 0; i < 3; i++) {
-                const r = top3[i];
-                const y = tableY + 25 + i * 72;
-                const style = barStyles[i];
-
-                ctx.fillStyle = style.bg;
-                roundRect(ctx, 45, y, W - 90, 56, 28);
+            barConfigs.forEach((cfg, idx) => {
+                const r = top3[idx];
+                ctx.fillStyle = cfg.bg;
+                roundRect(ctx, 49, cfg.y, 982, 61, 30.5);
                 ctx.fill();
 
                 // Club icon
-                ctx.fillStyle = style.club;
-                ctx.font = '26px serif';
-                ctx.textAlign = 'left';
-                ctx.fillText('♣', 68, y + 37);
+                if (cfg.club) {
+                    ctx.drawImage(cfg.club, 85, cfg.y + 17.5, 25.4, 25.4);
+                }
 
                 if (r) {
                     // Name
-                    ctx.fillStyle = style.text;
-                    ctx.font = "600 22px 'Inter', sans-serif";
+                    ctx.fillStyle = cfg.text;
+                    ctx.font = "600 24px '42dot Sans', sans-serif";
                     ctx.textAlign = 'left';
-                    ctx.fillText(r.name || '', 110, y + 37);
+                    ctx.fillText(r.name || '', 135, cfg.y + 40);
 
                     // W-L
-                    ctx.textAlign = 'right';
-                    ctx.font = "500 20px 'Inter', sans-serif";
-                    ctx.fillText(`${r.wins || 0}-${r.losses || 0}`, W - 310, y + 37);
-                    // Diff
-                    ctx.fillText(`${(r.diff > 0 ? '+' : '')}${r.diff || 0}`, W - 190, y + 37);
-                    // Points
-                    ctx.font = "700 22px 'Inter', sans-serif";
-                    ctx.fillText(`${r.placement_bonus || 0}`, W - 70, y + 37);
-                }
-            }
+                    ctx.font = "500 22px '42dot Sans', sans-serif";
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`${r.wins || 0}-${r.losses || 0}`, 700, cfg.y + 40);
 
-            // Footer
-            ctx.fillStyle = '#dfd6c5';
-            ctx.font = "500 22px 'Playfair Display', Georgia, serif";
-            ctx.textAlign = 'center';
-            ctx.globalAlpha = 0.8;
-            ctx.fillText('♣   T H E   D E U C E   C L U B', W/2, H - 70);
-            ctx.globalAlpha = 1;
+                    // +/-
+                    ctx.fillText(`${(r.diff > 0 ? '+' : '')}${r.diff || 0}`, 805, cfg.y + 40);
+
+                    // Points
+                    ctx.font = "700 24px '42dot Sans', sans-serif";
+                    ctx.fillText(`${r.placement_bonus || 0}`, 925, cfg.y + 40);
+                }
+            });
+
+            // Bottom right logo & text
+            if (tdcLogo) {
+                ctx.drawImage(tdcLogo, 656, 1743, 38.85, 39.1);
+            }
+            ctx.fillStyle = '#e7dfcf';
+            ctx.font = "bold 33.9px 'Playfair Display', serif";
+            ctx.textAlign = 'left';
+            ctx.fillText("THE DEUCE CLUB", 712.4, 1774);
 
         } else {
-            // Frame 2: TDC Classic Frame
-            ctx.fillStyle = '#080d0a';
-            ctx.fillRect(0, 0, W, H);
+            // Frame 2: TDC Classic (node 48-117)
+            const [deuceLogo, line1, line2, clubSmall] = await Promise.all([
+                loadImg('/img/frames/frame2_deuce_logo.svg'),
+                loadImg('/img/frames/frame2_line1.svg'),
+                loadImg('/img/frames/frame2_line2.svg'),
+                loadImg('/img/frames/frame2_club_small.svg'),
+            ]);
 
-            // Center photo area
-            const photoTop = 380;
-            const photoBottom = H - 380;
-            const photoH = photoBottom - photoTop;
-            const imgR = img.width / img.height;
-            const areaR = W / photoH;
-            let dW, dH, dX, dY;
-            if (imgR > areaR) {
-                dH = photoH;
-                dW = photoH * imgR;
-                dX = (W - dW) / 2;
-                dY = photoTop;
-            } else {
-                dW = W;
-                dH = W / imgR;
-                dX = 0;
-                dY = photoTop + (photoH - dH) / 2;
+            // Top Logo
+            if (deuceLogo) {
+                ctx.drawImage(deuceLogo, 424.8, 240, 230.4, 230.4);
             }
 
-            ctx.save();
-            ctx.beginPath();
-            ctx.rect(0, photoTop, W, photoH);
-            ctx.clip();
-            ctx.drawImage(img, dX, dY, dW, dH);
-            ctx.restore();
+            const drawSpacedText = (text, x, y, letterSpacing, align = 'center') => {
+                ctx.save();
+                ctx.textAlign = 'left';
+                let totalWidth = 0;
+                const charWidths = [];
+                for (let i = 0; i < text.length; i++) {
+                    const w = ctx.measureText(text[i]).width;
+                    charWidths.push(w);
+                    totalWidth += w;
+                    if (i < text.length - 1) totalWidth += letterSpacing;
+                }
+                let curX = align === 'center' ? x - totalWidth / 2 : (align === 'right' ? x - totalWidth : x);
+                for (let i = 0; i < text.length; i++) {
+                    ctx.fillText(text[i], curX, y);
+                    curX += charWidths[i] + letterSpacing;
+                }
+                ctx.restore();
+            };
 
-            // Gradient fades
-            const fadeTop = ctx.createLinearGradient(0, photoTop, 0, photoTop + 160);
-            fadeTop.addColorStop(0, 'rgba(8,13,10,1)');
-            fadeTop.addColorStop(1, 'rgba(8,13,10,0)');
-            ctx.fillStyle = fadeTop;
-            ctx.fillRect(0, photoTop, W, 160);
+            // Flanking lines 1
+            if (line1) {
+                ctx.drawImage(line1, 435.8, 483, 207.9, 1.95);
+            }
 
-            const fadeBot = ctx.createLinearGradient(0, photoBottom - 160, 0, photoBottom);
-            fadeBot.addColorStop(0, 'rgba(8,13,10,0)');
-            fadeBot.addColorStop(1, 'rgba(8,13,10,1)');
-            ctx.fillStyle = fadeBot;
-            ctx.fillRect(0, photoBottom - 160, W, 160);
-
-            // Top Header: Club Emblem & Branding
-            ctx.fillStyle = '#dfd6c5';
-            ctx.font = '85px serif';
+            // "THE"
+            ctx.fillStyle = '#e7dfcf';
+            ctx.font = "normal 31.2px 'Playfair Display', serif";
             ctx.textAlign = 'center';
-            ctx.fillText('♣', W/2, 170);
+            ctx.fillText("THE", 540, 488);
 
-            ctx.font = "300 24px 'Playfair Display', Georgia, serif";
-            ctx.fillText('—  T H E  —', W/2, 225);
+            // "DEUCE"
+            ctx.font = "normal 62.5px 'Playfair Display', serif";
+            drawSpacedText("DEUCE", 540, 540, 24.99, 'center');
 
-            ctx.font = "500 60px 'Playfair Display', Georgia, serif";
-            ctx.fillText('D E U C E', W/2, 290);
+            // Flanking lines 2
+            if (line2) {
+                ctx.drawImage(line2, 411.2, 595, 257.7, 1.95);
+            }
 
-            ctx.font = "300 24px 'Playfair Display', Georgia, serif";
-            ctx.fillText('—  C L U B  —', W/2, 335);
+            // "CLUB"
+            ctx.font = "normal 46.8px 'Playfair Display', serif";
+            drawSpacedText("CLUB", 540, 598, 5.15, 'center');
 
-            // Bottom Info
-            ctx.font = '28px serif';
+            // Bottom Event Info
+            if (clubSmall) {
+                ctx.drawImage(clubSmall, 527.3, 1629, 25.4, 25.4);
+            }
+
+            // Format event date
+            const eventDateStr = event.event_date 
+                ? new Date(event.event_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+                : '23 December 2026';
+
+            // Line 1: [event date]
+            ctx.fillStyle = '#f2ede3';
+            ctx.font = "300 24px '42dot Sans', sans-serif";
             ctx.textAlign = 'center';
-            ctx.fillText('♣', W/2, H - 250);
+            ctx.fillText(eventDateStr, 540, 1690);
 
-            ctx.globalAlpha = 0.75;
-            ctx.font = "400 22px 'Inter', sans-serif";
-            const dateStr = new Date(event.event_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-            ctx.fillText(dateStr, W/2, H - 200);
+            // Line 2: [event name]
+            ctx.font = "500 24px '42dot Sans', sans-serif";
+            ctx.fillText(event.event_name || 'Singles Social Point Play', 540, 1724);
 
-            ctx.globalAlpha = 0.95;
-            ctx.font = "600 28px 'Inter', sans-serif";
-            ctx.fillText(event.event_name, W/2, H - 155);
+            // Line 3: at [venue]
+            const atStr = "at ";
+            const venueStr = event.location || 'test';
+            ctx.font = "300 24px '42dot Sans', sans-serif";
+            const atW = ctx.measureText(atStr).width;
+            ctx.font = "500 24px '42dot Sans', sans-serif";
+            const venueW = ctx.measureText(venueStr).width;
+            const totalW = atW + venueW;
+            const startX = 540 - totalW / 2;
 
-            ctx.globalAlpha = 0.7;
-            ctx.font = "400 22px 'Inter', sans-serif";
-            ctx.fillText(`at ${event.location}`, W/2, H - 115);
-            ctx.globalAlpha = 1;
+            ctx.textAlign = 'left';
+            ctx.font = "300 24px '42dot Sans', sans-serif";
+            ctx.fillText(atStr, startX, 1758);
+            ctx.font = "500 24px '42dot Sans', sans-serif";
+            ctx.fillText(venueStr, startX + atW, 1758);
         }
     };
 
     // Effect to render live preview on canvas when modal opens or frame/photo changes
     useEffect(() => {
+        let isMounted = true;
         if (isPhotoFrameModalOpen && selectedPhoto && framedCanvasRef.current) {
             const img = new window.Image();
             img.crossOrigin = 'anonymous';
-            img.onload = () => {
-                drawFrame(framedCanvasRef.current, img, selectedFrame);
+            img.onload = async () => {
+                if (isMounted && framedCanvasRef.current) {
+                    await drawFrame(framedCanvasRef.current, img, selectedFrame);
+                }
             };
             img.src = selectedPhoto.url;
         }
+        return () => { isMounted = false; };
     }, [isPhotoFrameModalOpen, selectedPhoto, selectedFrame]);
 
     // Generate framed photo for download
@@ -502,7 +540,7 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
                 img.src = photoUrl;
             });
 
-            drawFrame(canvas, img, frameNum);
+            await drawFrame(canvas, img, frameNum);
             const dataUrl = canvas.toDataURL('image/png', 1.0);
             
             if (navigator.canShare) {
