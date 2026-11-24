@@ -1,0 +1,16 @@
+<svg width="1080" height="1920" viewBox="0 0 1080 1920" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="top_gradient_rect21" x1="540" y1="1417.58" x2="540" y2="-17" gradientUnits="userSpaceOnUse">
+      <stop offset="0.389423" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="0.798077" stop-color="#000000" stop-opacity="1"/>
+    </linearGradient>
+    <linearGradient id="bot_gradient_rect22" x1="540" y1="791.75" x2="540" y2="1973" gradientUnits="userSpaceOnUse">
+      <stop offset="0.400649" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+  <!-- Rectangle 21: Top gradient spanning from y = -17 to y = 974 -->
+  <rect x="0" y="-17" width="1080" height="991" fill="url(#top_gradient_rect21)"/>
+  <!-- Rectangle 22: Bottom gradient spanning from y = 1157 to y = 1973 -->
+  <rect x="0" y="1157" width="1080" height="816" fill="url(#bot_gradient_rect22)"/>
+</svg>

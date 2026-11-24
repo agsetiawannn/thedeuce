@@ -294,27 +294,30 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
         }
         ctx.drawImage(userImg, dX, dY, dW, dH);
 
-        // 2. Gradients overlay (exact Figma values)
-        // Top gradient: from black at top fading to transparent at y ~ 750px
-        const topGrad = ctx.createLinearGradient(0, 0, 0, 750);
-        topGrad.addColorStop(0, 'rgba(0, 0, 0, 0.96)');
-        topGrad.addColorStop(0.35, 'rgba(0, 0, 0, 0.75)');
-        topGrad.addColorStop(0.7, 'rgba(0, 0, 0, 0.3)');
-        topGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = topGrad;
-        ctx.fillRect(0, 0, W, 750);
+        // 2. Gradients overlay (exact Figma gradient matching Rectangles 21 and 22)
+        const gradOverlay = await loadImg('/img/frames/frame_gradient_overlay.svg');
+        if (gradOverlay) {
+            ctx.drawImage(gradOverlay, 0, 0, W, H);
+        } else {
+            // Precise mathematical fallback matching Figma linearGradient definitions
+            const topGrad = ctx.createLinearGradient(0, 1417.58, 0, -17);
+            topGrad.addColorStop(0, 'rgba(0, 0, 0, 0)');
+            topGrad.addColorStop(0.389423, 'rgba(0, 0, 0, 0)');
+            topGrad.addColorStop(0.798077, 'rgba(0, 0, 0, 1)');
+            topGrad.addColorStop(1, 'rgba(0, 0, 0, 1)');
+            ctx.fillStyle = topGrad;
+            ctx.fillRect(0, 0, W, 974);
 
-        // Bottom gradient: from transparent at y = 1150px fading to black at bottom
-        const botGrad = ctx.createLinearGradient(0, 1150, 0, H);
-        botGrad.addColorStop(0, 'rgba(0, 0, 0, 0)');
-        botGrad.addColorStop(0.35, 'rgba(0, 0, 0, 0.45)');
-        botGrad.addColorStop(0.75, 'rgba(0, 0, 0, 0.88)');
-        botGrad.addColorStop(1, 'rgba(0, 0, 0, 0.98)');
-        ctx.fillStyle = botGrad;
-        ctx.fillRect(0, 1150, W, H - 1150);
+            const botGrad = ctx.createLinearGradient(0, 791.75, 0, 1973);
+            botGrad.addColorStop(0, 'rgba(0, 0, 0, 0)');
+            botGrad.addColorStop(0.400649, 'rgba(0, 0, 0, 0)');
+            botGrad.addColorStop(1, 'rgba(0, 0, 0, 1)');
+            ctx.fillStyle = botGrad;
+            ctx.fillRect(0, 1157, W, 1920 - 1157);
+        }
 
         if (frameNum === 1) {
-            // Frame 1: Today's Podium (node 48-87)
+            // Frame 1: Today's Podium (node 51-111)
             const [whiteClub, goldClub, silverClub, bronzeClub, tdcLogo] = await Promise.all([
                 loadImg('/img/frames/frame1_white_club.svg'),
                 loadImg('/img/frames/frame1_gold_club.svg'),
@@ -323,56 +326,57 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
                 loadImg('/img/frames/frame1_tdc_logo.svg'),
             ]);
 
-            // Dark green box for "today's"
+            // Dark green box for "today's" (Rectangle 28: 318.24, 185.7, 277.52, 103.68)
             ctx.fillStyle = '#0d3127';
-            ctx.fillRect(402.58, 199, 222.87, 83.26);
+            ctx.fillRect(318.24, 185.7, 277.52, 103.68);
 
-            // White tilted club icon behind "podium" badge
+            // White tilted club icon behind "podium" badge (Node 51:115: 579, 118, 183.7, 194.88)
             if (whiteClub) {
-                ctx.save();
-                ctx.translate(680, 225);
-                ctx.rotate(-10.94 * Math.PI / 180);
-                ctx.drawImage(whiteClub, -88, -89, 176, 178);
-                ctx.restore();
+                ctx.drawImage(whiteClub, 579, 118, 183.7, 194.9);
             }
 
-            // Text "today’s"
+            // Text "today’s" (Node 51:117: 64.36px 42dot Sans Medium, center 457, vertical center 237.5)
             ctx.fillStyle = '#ffffff';
-            ctx.font = "500 51.7px '42dot Sans', sans-serif";
+            ctx.font = "500 64.4px '42dot Sans', sans-serif";
             ctx.textAlign = 'center';
-            ctx.fillText("today’s", 514.5, 258);
+            ctx.textBaseline = 'middle';
+            ctx.fillText("today’s", 457, 237.5);
 
-            // Lighter green box for "podium" (rotated -5.14 deg)
+            // Lighter green box for "podium" (Rectangle 29: center 557.7, 328.2, rotated -5.14 deg)
             ctx.save();
-            ctx.translate(595.2, 313.4);
-            ctx.rotate(-5.14 * Math.PI / 180);
+            ctx.translate(557.7, 328.2);
+            ctx.rotate(-5.137 * Math.PI / 180);
             ctx.fillStyle = '#087456';
-            ctx.fillRect(-111.4, -41.6, 222.87, 83.26);
+            ctx.fillRect(-138.76, -51.84, 277.52, 103.68);
 
-            // Text "podium"
+            // Text "podium" (Node 51:118)
             ctx.fillStyle = '#ffffff';
-            ctx.font = "500 51.7px '42dot Sans', sans-serif";
+            ctx.font = "500 64.4px '42dot Sans', sans-serif";
             ctx.textAlign = 'center';
-            ctx.fillText("podium", 0, 18);
+            ctx.textBaseline = 'middle';
+            ctx.fillText("podium", 0, -2);
             ctx.restore();
 
-            // Table headers
+            // Reset textBaseline
+            ctx.textBaseline = 'alphabetic';
+
+            // Table headers (Nodes 51:119 - 51:122)
             ctx.fillStyle = '#ffffff';
             ctx.font = "500 32px '42dot Sans', sans-serif";
             ctx.textAlign = 'center';
-            ctx.fillText("name", 207.5, 435);
-            ctx.fillText("W-L", 700, 435);
+            ctx.fillText("name", 207.5, 458);
+            ctx.fillText("W-L", 700, 458);
             ctx.textAlign = 'left';
-            ctx.fillText("+/-", 784, 435);
-            ctx.fillText("points", 881, 435);
+            ctx.fillText("+/-", 784, 458);
+            ctx.fillText("points", 881, 458);
 
             // Sort results
             const sortedResults = participants ? [...participants].sort((a, b) => (a.finish || 99) - (b.finish || 99)) : [];
             const top3 = [sortedResults[0] || null, sortedResults[1] || null, sortedResults[2] || null];
             const barConfigs = [
-                { bg: 'rgba(13, 49, 39, 0.88)', text: '#dfd6c5', club: goldClub, y: 459 },
-                { bg: 'rgba(242, 237, 227, 0.88)', text: '#17211d', club: silverClub, y: 533 },
-                { bg: 'rgba(242, 237, 227, 0.88)', text: '#17211d', club: bronzeClub, y: 607 },
+                { bg: 'rgba(13, 49, 39, 0.85)', text: '#ffffff', club: goldClub, y: 483.1, iconX: 76.4 },
+                { bg: 'rgba(242, 237, 227, 0.85)', text: '#17211d', club: silverClub, y: 557.1, iconX: 76.0 },
+                { bg: 'rgba(242, 237, 227, 0.85)', text: '#17211d', club: bronzeClub, y: 631.1, iconX: 76.0 },
             ];
 
             barConfigs.forEach((cfg, idx) => {
@@ -383,7 +387,7 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
 
                 // Club icon
                 if (cfg.club) {
-                    ctx.drawImage(cfg.club, 85, cfg.y + 17.5, 25.4, 25.4);
+                    ctx.drawImage(cfg.club, cfg.iconX, cfg.y + 17.8, 25.4, 25.4);
                 }
 
                 if (r) {
@@ -399,15 +403,17 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
                     ctx.fillText(`${r.wins || 0}-${r.losses || 0}`, 700, cfg.y + 40);
 
                     // +/-
-                    ctx.fillText(`${(r.diff > 0 ? '+' : '')}${r.diff || 0}`, 805, cfg.y + 40);
+                    ctx.textAlign = 'left';
+                    ctx.fillText(`${(r.diff > 0 ? '+' : '')}${r.diff || 0}`, 784, cfg.y + 40);
 
                     // Points
                     ctx.font = "700 24px '42dot Sans', sans-serif";
-                    ctx.fillText(`${r.placement_bonus || 0}`, 925, cfg.y + 40);
+                    ctx.textAlign = 'left';
+                    ctx.fillText(`${r.placement_bonus || 0}`, 881, cfg.y + 40);
                 }
             });
 
-            // Bottom right logo & text
+            // Bottom right logo & text (Node 51:129)
             if (tdcLogo) {
                 ctx.drawImage(tdcLogo, 656, 1743, 38.85, 39.1);
             }
@@ -417,7 +423,7 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
             ctx.fillText("THE DEUCE CLUB", 712.4, 1774);
 
         } else {
-            // Frame 2: TDC Classic (node 48-117)
+            // Frame 2: TDC Classic (node 24-53)
             const [deuceLogo, line1, line2, clubSmall] = await Promise.all([
                 loadImg('/img/frames/frame2_deuce_logo.svg'),
                 loadImg('/img/frames/frame2_line1.svg'),
