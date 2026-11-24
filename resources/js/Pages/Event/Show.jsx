@@ -277,16 +277,26 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
     });
 
     // Shared drawFrame function for canvas preview & download matching Figma nodes 48-117 & 48-87
-    const drawFrame = async (canvas, userImg, frameNum) => {
+    const drawFrame = async (canvas, userImg, frameNum, scale = 1) => {
         if (!canvas) return;
         if (document.fonts && document.fonts.ready) {
             await document.fonts.ready;
         }
-        const W = 1080, H = 1920;
-        canvas.width = W;
-        canvas.height = H;
+        const baseW = 1080, baseH = 1920;
+        canvas.width = Math.round(baseW * scale);
+        canvas.height = Math.round(baseH * scale);
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
+
+        // Ensure maximum bicubic smoothing quality when rendering/scaling
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+
+        ctx.save();
+        if (scale !== 1) {
+            ctx.scale(scale, scale);
+        }
+        const W = baseW, H = baseH;
 
         // 1. Draw user photo covering full canvas (object-cover)
         const imgRatio = userImg.width / userImg.height;
@@ -372,10 +382,12 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
             ctx.textBaseline = 'alphabetic';
 
             // Table headers (Nodes 51:119 - 51:122)
+            const colNameX = 165;
             ctx.fillStyle = '#ffffff';
             ctx.font = "500 32px '42dot Sans', sans-serif";
+            ctx.textAlign = 'left';
+            ctx.fillText("name", colNameX, 458);
             ctx.textAlign = 'center';
-            ctx.fillText("name", 207.5, 458);
             ctx.fillText("W-L", 700, 458);
             ctx.textAlign = 'left';
             ctx.fillText("+/-", 784, 458);
@@ -402,27 +414,33 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
                 }
 
                 if (r) {
-                    // Name
+                    // Set textBaseline to middle for perfect vertical centering inside the 61px pill bar
+                    ctx.textBaseline = 'middle';
+                    const rowCenterY = cfg.y + 30.5;
+
+                    // Name - aligned on exact same colNameX guide as "name" header
                     ctx.fillStyle = cfg.text;
                     ctx.font = "600 24px '42dot Sans', sans-serif";
                     ctx.textAlign = 'left';
-                    ctx.fillText(r.name || '', 135, cfg.y + 40);
+                    ctx.fillText(r.name || '', colNameX, rowCenterY);
 
                     // W-L
                     ctx.font = "500 22px '42dot Sans', sans-serif";
                     ctx.textAlign = 'center';
-                    ctx.fillText(`${r.wins || 0}-${r.losses || 0}`, 700, cfg.y + 40);
+                    ctx.fillText(`${r.wins || 0}-${r.losses || 0}`, 700, rowCenterY);
 
                     // +/-
                     ctx.textAlign = 'left';
-                    ctx.fillText(`${(r.diff > 0 ? '+' : '')}${r.diff || 0}`, 784, cfg.y + 40);
+                    ctx.fillText(`${(r.diff > 0 ? '+' : '')}${r.diff || 0}`, 784, rowCenterY);
 
                     // Points
                     ctx.font = "700 24px '42dot Sans', sans-serif";
                     ctx.textAlign = 'left';
-                    ctx.fillText(`${r.placement_bonus || 0}`, 881, cfg.y + 40);
+                    ctx.fillText(`${r.placement_bonus || 0}`, 881, rowCenterY);
                 }
             });
+
+            ctx.textBaseline = 'alphabetic';
 
             // Bottom right logo & text (Node 51:129)
             if (tdcLogo) {
@@ -526,6 +544,7 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
             ctx.font = "500 24px '42dot Sans', sans-serif";
             ctx.fillText(venueStr, startX + atW, 1758);
         }
+        ctx.restore();
     };
 
     // Effect to render live preview on canvas when modal opens or frame/photo changes
@@ -536,7 +555,7 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
             img.crossOrigin = 'anonymous';
             img.onload = async () => {
                 if (isMounted && framedCanvasRef.current) {
-                    await drawFrame(framedCanvasRef.current, img, selectedFrame);
+                    await drawFrame(framedCanvasRef.current, img, selectedFrame, 1);
                 }
             };
             img.src = selectedPhoto.url;
@@ -544,7 +563,7 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
         return () => { isMounted = false; };
     }, [isPhotoFrameModalOpen, selectedPhoto, selectedFrame]);
 
-    // Generate framed photo for download
+    // Generate framed photo for download in full uncompressed Ultra-HD quality
     const generateFramedPhoto = async (photoUrl, frameNum) => {
         setIsGeneratingFramed(true);
         try {
@@ -557,25 +576,22 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
                 img.src = photoUrl;
             });
 
-            await drawFrame(canvas, img, frameNum);
-            const dataUrl = canvas.toDataURL('image/png', 1.0);
-            
-            if (navigator.canShare) {
-                try {
-                    const blob = await (await fetch(dataUrl)).blob();
-                    const file = new File([blob], `TDC_${event.event_id}_frame${frameNum}.png`, { type: 'image/png' });
-                    if (navigator.canShare({ files: [file] })) {
-                        await navigator.share({ files: [file], title: 'The Deuce Club' });
-                        setIsPhotoFrameModalOpen(false);
-                        return;
-                    }
-                } catch (err) { /* fall through to download */ }
-            }
-            
+            // Render at 2x resolution (2160x3840 Ultra-HD) for maximum sharpness without pixelation
+            await drawFrame(canvas, img, frameNum, 2);
+
+            // Export lossless uncompressed PNG blob directly
+            const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+            if (!blob) throw new Error('Blob creation failed');
+
+            const fileUrl = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.download = `TDC_${event.event_id}_frame${frameNum}.png`;
-            link.href = dataUrl;
+            link.href = fileUrl;
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
+            setTimeout(() => URL.revokeObjectURL(fileUrl), 8000);
+
             setIsPhotoFrameModalOpen(false);
         } catch (err) {
             console.error('Frame generation failed', err);
