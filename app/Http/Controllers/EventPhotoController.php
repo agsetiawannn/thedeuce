@@ -51,11 +51,15 @@ class EventPhotoController extends Controller
 
     public function destroy(Request $request, $eventId, $photoId)
     {
-        if (!$this->isAdmin($request->user())) {
+        $photo = EventPhoto::where('event_id', $eventId)->findOrFail($photoId);
+
+        $user = $request->user();
+        $canDelete = $this->isAdmin($user) || ($user && strtolower($user->email) === strtolower($photo->uploaded_by));
+
+        if (!$canDelete) {
             return back()->with('error', 'Unauthorized.');
         }
 
-        $photo = EventPhoto::where('event_id', $eventId)->findOrFail($photoId);
         Storage::disk('public')->delete($photo->path);
         $photo->delete();
 

@@ -251,9 +251,20 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
     };
 
     const handleDeletePhoto = (photoId) => {
-        if (!confirm('Delete this photo?')) return;
+        if (!confirm('Apakah kamu yakin ingin menghapus foto ini?')) return;
         router.delete(`/events/${event.event_id}/photos/${photoId}`, {
             preserveScroll: true,
+            onSuccess: () => {
+                if (selectedPhoto && selectedPhoto.id === photoId) {
+                    const remaining = eventPhotos.filter(p => p.id !== photoId);
+                    if (remaining.length > 0) {
+                        setSelectedPhoto(remaining[0]);
+                    } else {
+                        setSelectedPhoto(null);
+                        setIsPhotoFrameModalOpen(false);
+                    }
+                }
+            }
         });
     };
 
@@ -1052,44 +1063,58 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
                             </div>
                         )}
 
-                        {/* Event Photos Gallery & Download with Frame */}
-                        {eventPhotos.length > 0 && (
-                            <div className="mt-8 border-t border-white/10 pt-6">
-                                <h3 className="text-white text-sm font-medium mb-4 flex items-center space-x-2">
-                                    <ImageIcon size={16} />
-                                    <span>Event Photos</span>
-                                    <span className="text-white/40 text-xs">({eventPhotos.length})</span>
-                                </h3>
-                                <div className="grid grid-cols-3 gap-2">
-                                    {eventPhotos.map((photo) => (
-                                        <div 
-                                            key={photo.id} 
-                                            className="relative aspect-square rounded-xl overflow-hidden bg-white/5 cursor-pointer group"
-                                            onClick={() => { setSelectedPhoto(photo); setIsPhotoFrameModalOpen(true); }}
-                                        >
-                                            <img 
-                                                src={photo.url} 
-                                                alt={photo.filename} 
-                                                className="w-full h-full object-cover"
-                                            />
-                                            <div className="absolute inset-0 bg-black/0 group-active:bg-black/30 transition-colors flex items-center justify-center">
-                                                <Download size={20} className="text-white opacity-0 group-active:opacity-100 transition-opacity" />
-                                            </div>
-                                            {isAdmin && isEditMode && (
-                                                <button
-                                                    onClick={(e) => { e.stopPropagation(); handleDeletePhoto(photo.id); }}
-                                                    className="absolute top-1 right-1 w-6 h-6 bg-[#9c3232] text-white rounded-full flex items-center justify-center"
-                                                >
-                                                    <Trash2 size={10} />
-                                                </button>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </>
+            )}
+
+            {/* Event Photos Gallery & Download with Frame */}
+            {eventPhotos.length > 0 && (
+                <div className="mt-8 border-t border-white/10 pt-6">
+                    <h3 className="text-white text-sm font-medium mb-4 flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                            <ImageIcon size={16} />
+                            <span>Event Photos</span>
+                            <span className="text-white/40 text-xs">({eventPhotos.length})</span>
+                        </div>
+                        {isAdmin && (
+                            <button
+                                onClick={() => photoInputRef.current?.click()}
+                                disabled={isUploading}
+                                className="text-[#dfd6c5]/80 hover:text-[#dfd6c5] text-[11px] font-medium flex items-center space-x-1 transition-colors"
+                            >
+                                <Camera size={13} />
+                                <span>{isUploading ? 'Uploading...' : '+ Upload Foto'}</span>
+                            </button>
+                        )}
+                    </h3>
+                    <div className="grid grid-cols-3 gap-2">
+                        {eventPhotos.map((photo) => (
+                            <div 
+                                key={photo.id} 
+                                className="relative aspect-square rounded-xl overflow-hidden bg-white/5 cursor-pointer group"
+                                onClick={() => { setSelectedPhoto(photo); setIsPhotoFrameModalOpen(true); }}
+                            >
+                                <img 
+                                    src={photo.url} 
+                                    alt={photo.filename} 
+                                    className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-black/0 group-active:bg-black/30 transition-colors flex items-center justify-center">
+                                    <Download size={20} className="text-white opacity-0 group-active:opacity-100 transition-opacity" />
+                                </div>
+                                {isAdmin && (
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); handleDeletePhoto(photo.id); }}
+                                        className="absolute top-1.5 right-1.5 w-6 h-6 bg-[#9c3232] hover:bg-[#b83838] text-white rounded-full flex items-center justify-center shadow-lg transition-transform active:scale-90 z-10"
+                                        title="Hapus Foto"
+                                    >
+                                        <Trash2 size={12} />
+                                    </button>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
             )}
 
             {/* Footer */}
@@ -1423,7 +1448,18 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
                         <h2 className="text-sm font-medium tracking-widest uppercase text-[#dfd6c5]">
                             Framed Event Photo
                         </h2>
-                        <div className="w-8"></div>
+                        {isAdmin && selectedPhoto ? (
+                            <button
+                                onClick={() => handleDeletePhoto(selectedPhoto.id)}
+                                className="flex items-center space-x-1.5 py-1 px-2.5 rounded-full bg-red-950/60 border border-red-500/40 text-red-300 hover:bg-red-900 hover:text-white transition-colors text-[11px] font-medium"
+                                title="Hapus foto ini"
+                            >
+                                <Trash2 size={13} />
+                                <span>Hapus</span>
+                            </button>
+                        ) : (
+                            <div className="w-8"></div>
+                        )}
                     </div>
 
                     {/* Body */}
@@ -1458,15 +1494,25 @@ export default function EventShow({ event, participants, eventPhotos = [] }) {
                                 <span className="text-[10px] text-[#dfd6c5]/70 mb-1 block uppercase tracking-wider">Choose Photo:</span>
                                 <div className="flex space-x-2 overflow-x-auto pb-1 hide-scrollbar">
                                     {eventPhotos.map((p) => (
-                                        <img
-                                            key={p.id}
-                                            src={p.url}
-                                            alt="thumb"
-                                            onClick={() => setSelectedPhoto(p)}
-                                            className={`w-12 h-12 object-cover rounded-lg cursor-pointer shrink-0 border-2 transition-all ${
-                                                selectedPhoto.id === p.id ? 'border-[#d4af37] scale-105 shadow-md' : 'border-white/10 opacity-60'
-                                            }`}
-                                        />
+                                        <div key={p.id} className="relative shrink-0 pt-1 pr-1">
+                                            <img
+                                                src={p.url}
+                                                alt="thumb"
+                                                onClick={() => setSelectedPhoto(p)}
+                                                className={`w-12 h-12 object-cover rounded-lg cursor-pointer border-2 transition-all ${
+                                                    selectedPhoto?.id === p.id ? 'border-[#d4af37] scale-105 shadow-md' : 'border-white/10 opacity-60'
+                                                }`}
+                                            />
+                                            {isAdmin && (
+                                                <button
+                                                    onClick={(e) => { e.stopPropagation(); handleDeletePhoto(p.id); }}
+                                                    className="absolute top-0 right-0 w-4 h-4 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center text-[10px] shadow-md z-10"
+                                                    title="Hapus foto ini"
+                                                >
+                                                    ×
+                                                </button>
+                                            )}
+                                        </div>
                                     ))}
                                 </div>
                             </div>
