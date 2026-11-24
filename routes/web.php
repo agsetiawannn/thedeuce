@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PushSubscriptionController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\EventPhotoController;
 
 Route::get('/login', function () {
     return inertia('Auth/Login');
@@ -30,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/events/{id}/checkin/{result_id}', [EventController::class, 'deleteCheckin'])->name('events.checkin.delete');
     Route::post('/events/{id}/end', [EventController::class, 'endSession'])->name('events.endSession');
     Route::put('/events/{id}/result', [EventController::class, 'updateResult'])->name('events.updateResult');
+
+    Route::post('/events/{id}/photos', [EventPhotoController::class, 'upload'])->name('events.photos.upload');
+    Route::delete('/events/{id}/photos/{photoId}', [EventPhotoController::class, 'destroy'])->name('events.photos.destroy');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Head, Link, router, usePage } from '@inertiajs/react';
-import { Calendar, Clock, MapPin, ChevronLeft, Edit2, X, Trash2, Share2, Download, Link as LinkIcon } from 'lucide-react';
+import { Calendar, Clock, MapPin, ChevronLeft, Edit2, X, Trash2, Share2, Download, Link as LinkIcon, Camera, Image as ImageIcon } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import html2canvas from 'html2canvas-pro';
 import { createPortal } from 'react-dom';
 import SessionResultGraphic from '../../Components/SessionResultGraphic';
 
-export default function EventShow({ event, participants }) {
+export default function EventShow({ event, participants, eventPhotos = [] }) {
     const { auth } = usePage().props;
     const allowedEmails = ['anandazhou09@gmail.com', 'idabagusadhya@gmail.com', 'abiseka33@gmail.com', 'setiawan18221@gmail.com'];
     const isAdmin = auth?.user?.email && allowedEmails.includes(auth.user.email.toLowerCase());
@@ -26,6 +26,16 @@ export default function EventShow({ event, participants }) {
     const [downloadingId, setDownloadingId] = useState(null);
     const [activeQrTeam, setActiveQrTeam] = useState(null);
     const graphicRefs = React.useRef({});
+
+    // Photo upload/download states
+    const [isUploading, setIsUploading] = useState(false);
+    const [isPhotoFrameModalOpen, setIsPhotoFrameModalOpen] = useState(false);
+    const [selectedPhoto, setSelectedPhoto] = useState(null);
+    const [selectedFrame, setSelectedFrame] = useState(1);
+    const [isGeneratingFramed, setIsGeneratingFramed] = useState(false);
+    const [isPhotoGalleryOpen, setIsPhotoGalleryOpen] = useState(false);
+    const photoInputRef = useRef(null);
+    const framedCanvasRef = useRef(null);
     
     const isFixedPartner = event?.event_format === 'fixed_partner';
     
@@ -217,6 +227,324 @@ export default function EventShow({ event, participants }) {
         link.click();
     };
 
+    // Photo upload handler
+    const handlePhotoUpload = (e) => {
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
+
+        setIsUploading(true);
+        const formData = new FormData();
+        Array.from(files).forEach(f => formData.append('photos[]', f));
+
+        router.post(`/events/${event.event_id}/photos`, formData, {
+            preserveScroll: true,
+            forceFormData: true,
+            onSuccess: () => {
+                setIsUploading(false);
+                if (photoInputRef.current) photoInputRef.current.value = '';
+            },
+            onError: () => {
+                setIsUploading(false);
+                alert('Upload failed.');
+            }
+        });
+    };
+
+    const handleDeletePhoto = (photoId) => {
+        if (!confirm('Delete this photo?')) return;
+        router.delete(`/events/${event.event_id}/photos/${photoId}`, {
+            preserveScroll: true,
+        });
+    };
+
+    // Shared drawFrame function for canvas preview & download
+    const drawFrame = (canvas, img, frameNum) => {
+        const W = 1080, H = 1920;
+        canvas.width = W;
+        canvas.height = H;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        if (frameNum === 1) {
+            // Frame 1: Today's Podium
+            ctx.fillStyle = '#0a100d';
+            ctx.fillRect(0, 0, W, H);
+
+            // Draw Photo in center-upper region
+            const photoAreaY = 0;
+            const photoAreaH = H * 0.52;
+            const imgRatio = img.width / img.height;
+            const areaRatio = W / photoAreaH;
+            let drawW, drawH, drawX, drawY;
+            if (imgRatio > areaRatio) {
+                drawH = photoAreaH;
+                drawW = photoAreaH * imgRatio;
+                drawX = (W - drawW) / 2;
+                drawY = photoAreaY;
+            } else {
+                drawW = W;
+                drawH = W / imgRatio;
+                drawX = 0;
+                drawY = photoAreaY + (photoAreaH - drawH) / 2;
+            }
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(0, photoAreaY, W, photoAreaH);
+            ctx.clip();
+            ctx.drawImage(img, drawX, drawY, drawW, drawH);
+            
+            // Vignette gradient fade to black at bottom of photo
+            const fadeGrad = ctx.createLinearGradient(0, photoAreaH - 220, 0, photoAreaH);
+            fadeGrad.addColorStop(0, 'rgba(10,16,13,0)');
+            fadeGrad.addColorStop(1, 'rgba(10,16,13,1)');
+            ctx.fillStyle = fadeGrad;
+            ctx.fillRect(0, photoAreaH - 220, W, 220);
+            ctx.restore();
+
+            // White Club Logo
+            const logoY = photoAreaH + 40;
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '70px serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('♣', W/2 + 90, logoY);
+
+            // "today's" tag in angled badge
+            ctx.save();
+            ctx.translate(W/2 - 70, logoY - 15);
+            ctx.rotate(-0.04);
+            ctx.fillStyle = '#173f30';
+            roundRect(ctx, -85, -28, 170, 52, 10);
+            ctx.fill();
+            ctx.fillStyle = '#ffffff';
+            ctx.font = "bold 32px 'Inter', sans-serif";
+            ctx.textAlign = 'center';
+            ctx.fillText("today's", 0, 8);
+            ctx.restore();
+
+            // "podium" tag in green badge
+            ctx.save();
+            ctx.translate(W/2 + 20, logoY + 35);
+            ctx.rotate(0.02);
+            ctx.fillStyle = '#1b7454';
+            roundRect(ctx, -95, -28, 190, 54, 10);
+            ctx.fill();
+            ctx.fillStyle = '#ffffff';
+            ctx.font = "bold 34px 'Inter', sans-serif";
+            ctx.textAlign = 'center';
+            ctx.fillText("podium", 0, 9);
+            ctx.restore();
+
+            // Table headers
+            const tableY = logoY + 120;
+            ctx.fillStyle = '#dfd6c5';
+            ctx.font = "600 24px 'Inter', sans-serif";
+            ctx.textAlign = 'left';
+            ctx.fillText('name', 70, tableY);
+            ctx.textAlign = 'right';
+            ctx.fillText('W-L', W - 320, tableY);
+            ctx.fillText('+/-', W - 200, tableY);
+            ctx.fillText('points', W - 70, tableY);
+
+            // Podium rows
+            const sortedResults = participants ? [...participants].sort((a, b) => (a.finish || 99) - (b.finish || 99)) : [];
+            const top3 = sortedResults.slice(0, 3);
+            const barStyles = [
+                { bg: '#173f30', text: '#dfd6c5', club: '#d4af37' },
+                { bg: '#dfd6c5', text: '#111a15', club: '#8a928e' },
+                { bg: '#c9beab', text: '#111a15', club: '#b06d3b' },
+            ];
+
+            for (let i = 0; i < 3; i++) {
+                const r = top3[i];
+                const y = tableY + 25 + i * 72;
+                const style = barStyles[i];
+
+                ctx.fillStyle = style.bg;
+                roundRect(ctx, 45, y, W - 90, 56, 28);
+                ctx.fill();
+
+                // Club icon
+                ctx.fillStyle = style.club;
+                ctx.font = '26px serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('♣', 68, y + 37);
+
+                if (r) {
+                    // Name
+                    ctx.fillStyle = style.text;
+                    ctx.font = "600 22px 'Inter', sans-serif";
+                    ctx.textAlign = 'left';
+                    ctx.fillText(r.name || '', 110, y + 37);
+
+                    // W-L
+                    ctx.textAlign = 'right';
+                    ctx.font = "500 20px 'Inter', sans-serif";
+                    ctx.fillText(`${r.wins || 0}-${r.losses || 0}`, W - 310, y + 37);
+                    // Diff
+                    ctx.fillText(`${(r.diff > 0 ? '+' : '')}${r.diff || 0}`, W - 190, y + 37);
+                    // Points
+                    ctx.font = "700 22px 'Inter', sans-serif";
+                    ctx.fillText(`${r.placement_bonus || 0}`, W - 70, y + 37);
+                }
+            }
+
+            // Footer
+            ctx.fillStyle = '#dfd6c5';
+            ctx.font = "500 22px 'Playfair Display', Georgia, serif";
+            ctx.textAlign = 'center';
+            ctx.globalAlpha = 0.8;
+            ctx.fillText('♣   T H E   D E U C E   C L U B', W/2, H - 70);
+            ctx.globalAlpha = 1;
+
+        } else {
+            // Frame 2: TDC Classic Frame
+            ctx.fillStyle = '#080d0a';
+            ctx.fillRect(0, 0, W, H);
+
+            // Center photo area
+            const photoTop = 380;
+            const photoBottom = H - 380;
+            const photoH = photoBottom - photoTop;
+            const imgR = img.width / img.height;
+            const areaR = W / photoH;
+            let dW, dH, dX, dY;
+            if (imgR > areaR) {
+                dH = photoH;
+                dW = photoH * imgR;
+                dX = (W - dW) / 2;
+                dY = photoTop;
+            } else {
+                dW = W;
+                dH = W / imgR;
+                dX = 0;
+                dY = photoTop + (photoH - dH) / 2;
+            }
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(0, photoTop, W, photoH);
+            ctx.clip();
+            ctx.drawImage(img, dX, dY, dW, dH);
+            ctx.restore();
+
+            // Gradient fades
+            const fadeTop = ctx.createLinearGradient(0, photoTop, 0, photoTop + 160);
+            fadeTop.addColorStop(0, 'rgba(8,13,10,1)');
+            fadeTop.addColorStop(1, 'rgba(8,13,10,0)');
+            ctx.fillStyle = fadeTop;
+            ctx.fillRect(0, photoTop, W, 160);
+
+            const fadeBot = ctx.createLinearGradient(0, photoBottom - 160, 0, photoBottom);
+            fadeBot.addColorStop(0, 'rgba(8,13,10,0)');
+            fadeBot.addColorStop(1, 'rgba(8,13,10,1)');
+            ctx.fillStyle = fadeBot;
+            ctx.fillRect(0, photoBottom - 160, W, 160);
+
+            // Top Header: Club Emblem & Branding
+            ctx.fillStyle = '#dfd6c5';
+            ctx.font = '85px serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('♣', W/2, 170);
+
+            ctx.font = "300 24px 'Playfair Display', Georgia, serif";
+            ctx.fillText('—  T H E  —', W/2, 225);
+
+            ctx.font = "500 60px 'Playfair Display', Georgia, serif";
+            ctx.fillText('D E U C E', W/2, 290);
+
+            ctx.font = "300 24px 'Playfair Display', Georgia, serif";
+            ctx.fillText('—  C L U B  —', W/2, 335);
+
+            // Bottom Info
+            ctx.font = '28px serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('♣', W/2, H - 250);
+
+            ctx.globalAlpha = 0.75;
+            ctx.font = "400 22px 'Inter', sans-serif";
+            const dateStr = new Date(event.event_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+            ctx.fillText(dateStr, W/2, H - 200);
+
+            ctx.globalAlpha = 0.95;
+            ctx.font = "600 28px 'Inter', sans-serif";
+            ctx.fillText(event.event_name, W/2, H - 155);
+
+            ctx.globalAlpha = 0.7;
+            ctx.font = "400 22px 'Inter', sans-serif";
+            ctx.fillText(`at ${event.location}`, W/2, H - 115);
+            ctx.globalAlpha = 1;
+        }
+    };
+
+    // Effect to render live preview on canvas when modal opens or frame/photo changes
+    useEffect(() => {
+        if (isPhotoFrameModalOpen && selectedPhoto && framedCanvasRef.current) {
+            const img = new window.Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => {
+                drawFrame(framedCanvasRef.current, img, selectedFrame);
+            };
+            img.src = selectedPhoto.url;
+        }
+    }, [isPhotoFrameModalOpen, selectedPhoto, selectedFrame]);
+
+    // Generate framed photo for download
+    const generateFramedPhoto = async (photoUrl, frameNum) => {
+        setIsGeneratingFramed(true);
+        try {
+            const canvas = document.createElement('canvas');
+            const img = new window.Image();
+            img.crossOrigin = 'anonymous';
+            await new Promise((resolve, reject) => {
+                img.onload = resolve;
+                img.onerror = reject;
+                img.src = photoUrl;
+            });
+
+            drawFrame(canvas, img, frameNum);
+            const dataUrl = canvas.toDataURL('image/png', 1.0);
+            
+            if (navigator.canShare) {
+                try {
+                    const blob = await (await fetch(dataUrl)).blob();
+                    const file = new File([blob], `TDC_${event.event_id}_frame${frameNum}.png`, { type: 'image/png' });
+                    if (navigator.canShare({ files: [file] })) {
+                        await navigator.share({ files: [file], title: 'The Deuce Club' });
+                        setIsPhotoFrameModalOpen(false);
+                        return;
+                    }
+                } catch (err) { /* fall through to download */ }
+            }
+            
+            const link = document.createElement('a');
+            link.download = `TDC_${event.event_id}_frame${frameNum}.png`;
+            link.href = dataUrl;
+            link.click();
+            setIsPhotoFrameModalOpen(false);
+        } catch (err) {
+            console.error('Frame generation failed', err);
+            alert('Failed to generate framed photo.');
+        } finally {
+            setIsGeneratingFramed(false);
+        }
+    };
+
+    // Helper for rounded rectangles
+    function roundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y);
+        ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+        ctx.lineTo(x + w, y + h - r);
+        ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        ctx.lineTo(x + r, y + h);
+        ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+        ctx.lineTo(x, y + r);
+        ctx.quadraticCurveTo(x, y, x + r, y);
+        ctx.closePath();
+    }
+
     const MAX_PLAYERS = 16;
     const checkedInCount = participants ? participants.length : 0;
     const targetSlots = Math.min(MAX_PLAYERS, Math.max(8, Math.ceil(checkedInCount / 2) * 2));
@@ -378,21 +706,41 @@ export default function EventShow({ event, participants }) {
                             <div className="flex flex-col mt-8 border-t border-white/10 pt-8 space-y-4">
                                 <div className="flex flex-col space-y-3">
                                     {!isFixedPartner ? (
-                                        <div className="flex justify-between">
-                                            <button 
-                                                onClick={() => { setActiveQrTeam(null); setIsQrModalOpen(true); }}
-                                                className="bg-[#247c64] text-white text-[10px] font-medium py-2.5 px-6 rounded-lg text-center shadow-sm"
-                                            >
-                                                [generate QR]
-                                            </button>
-                                            {checkedInCount > 0 && (
+                                        <div className="flex flex-col space-y-3">
+                                            <div className="flex items-center justify-between gap-2">
                                                 <button 
-                                                    onClick={() => setIsSessionEndedModalOpen(true)}
-                                                    className="bg-[#9c3232] text-white text-[10px] font-medium py-2.5 px-6 rounded-lg text-center shadow-sm"
+                                                    onClick={() => { setActiveQrTeam(null); setIsQrModalOpen(true); }}
+                                                    className="bg-[#247c64] hover:bg-[#1e6854] text-white text-[10px] font-medium py-2.5 px-3 rounded-lg text-center shadow-sm flex-1 truncate transition-colors"
                                                 >
-                                                    [end session]
+                                                    [generate QR]
                                                 </button>
-                                            )}
+                                                <button 
+                                                    onClick={() => photoInputRef.current?.click()}
+                                                    disabled={isUploading}
+                                                    className="bg-[#30453d] hover:bg-[#3d564d] text-[#dfd6c5] border border-white/20 text-[10px] font-medium py-2.5 px-2 rounded-lg text-center shadow-sm flex-1 truncate flex items-center justify-center space-x-1 disabled:opacity-50 transition-colors"
+                                                >
+                                                    <Camera size={13} className="shrink-0" />
+                                                    <span>{isUploading ? 'Uploading...' : '[upload foto]'}</span>
+                                                </button>
+                                                {checkedInCount > 0 ? (
+                                                    <button 
+                                                        onClick={() => setIsSessionEndedModalOpen(true)}
+                                                        className="bg-[#9c3232] hover:bg-[#822a2a] text-white text-[10px] font-medium py-2.5 px-3 rounded-lg text-center shadow-sm flex-1 truncate transition-colors"
+                                                    >
+                                                        [end session]
+                                                    </button>
+                                                ) : (
+                                                    <div className="flex-1"></div>
+                                                )}
+                                            </div>
+                                            <input 
+                                                ref={photoInputRef}
+                                                type="file" 
+                                                accept="image/*" 
+                                                multiple 
+                                                className="hidden" 
+                                                onChange={handlePhotoUpload}
+                                            />
                                         </div>
                                     ) : (
                                         <>
@@ -407,16 +755,32 @@ export default function EventShow({ event, participants }) {
                                                     </button>
                                                 ))}
                                             </div>
-                                            {checkedInCount > 0 && (
-                                                <div className="flex justify-end mt-2">
+                                            <div className="flex items-center justify-between gap-2 mt-2">
+                                                <button 
+                                                    onClick={() => photoInputRef.current?.click()}
+                                                    disabled={isUploading}
+                                                    className="bg-[#30453d] hover:bg-[#3d564d] text-[#dfd6c5] border border-white/20 text-[10px] font-medium py-2 px-3 rounded-lg text-center shadow-sm flex-1 truncate flex items-center justify-center space-x-1.5 disabled:opacity-50"
+                                                >
+                                                    <Camera size={13} />
+                                                    <span>{isUploading ? 'Uploading...' : '[upload foto]'}</span>
+                                                </button>
+                                                {checkedInCount > 0 && (
                                                     <button 
                                                         onClick={() => setIsSessionEndedModalOpen(true)}
-                                                        className="bg-[#9c3232] text-white text-[10px] font-medium py-2.5 px-6 rounded-lg text-center shadow-sm"
+                                                        className="bg-[#9c3232] text-white text-[10px] font-medium py-2 px-4 rounded-lg text-center shadow-sm flex-1 truncate"
                                                     >
                                                         [end session]
                                                     </button>
-                                                </div>
-                                            )}
+                                                )}
+                                            </div>
+                                            <input 
+                                                ref={photoInputRef}
+                                                type="file" 
+                                                accept="image/*" 
+                                                multiple 
+                                                className="hidden" 
+                                                onChange={handlePhotoUpload}
+                                            />
                                         </>
                                     )}
                                 </div>
@@ -565,8 +929,9 @@ export default function EventShow({ event, participants }) {
                             )}
                         </div>
                         
-                        {loggedInResult && (
-                            <div className="mt-8 flex items-center justify-center w-full">
+                        {/* Action buttons: GENERATE SESSION RESULT & DOWNLOAD EVENT PHOTO side-by-side */}
+                        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center w-full gap-3">
+                            {loggedInResult && (
                                 <button 
                                     onClick={() => handleDownloadGraphic(loggedInResult.result_id, loggedInResult.name)}
                                     disabled={downloadingId !== null}
@@ -574,35 +939,108 @@ export default function EventShow({ event, participants }) {
                                 >
                                     {downloadingId !== null ? 'GENERATING...' : 'GENERATE SESSION RESULT'}
                                 </button>
+                            )}
 
-                                {/* Hidden Graphic for Generation */}
-                                <div className="absolute top-0 left-0 opacity-0 pointer-events-none z-[-1000]">
-                                    <SessionResultGraphic 
-                                        ref={(el) => (graphicRefs.current[`${loggedInResult.result_id}_1`] = el)}
-                                        layout={1}
-                                        eventName={event.event_name}
-                                        placement={loggedInResult.finish}
-                                        wins={loggedInResult.wins || 0}
-                                        losses={loggedInResult.losses || 0}
-                                        winRate={loggedInResult.wins + loggedInResult.losses > 0 ? Math.round((loggedInResult.wins / (loggedInResult.wins + loggedInResult.losses)) * 100) : 0}
-                                        pointsEarned={loggedInResult.placement_bonus || 0}
-                                        tier={loggedInResult.member?.status_tier || 'CLUB'}
-                                        date={new Date(event.event_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase()}
-                                        location={event.location.toUpperCase()}
-                                    />
-                                    <SessionResultGraphic 
-                                        ref={(el) => (graphicRefs.current[`${loggedInResult.result_id}_2`] = el)}
-                                        layout={2}
-                                        eventName={event.event_name}
-                                        placement={loggedInResult.finish}
-                                        wins={loggedInResult.wins || 0}
-                                        losses={loggedInResult.losses || 0}
-                                        winRate={loggedInResult.wins + loggedInResult.losses > 0 ? Math.round((loggedInResult.wins / (loggedInResult.wins + loggedInResult.losses)) * 100) : 0}
-                                        pointsEarned={loggedInResult.placement_bonus || 0}
-                                        tier={loggedInResult.member?.status_tier || 'CLUB'}
-                                        date={new Date(event.event_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase()}
-                                        location={event.location.toUpperCase()}
-                                    />
+                            {eventPhotos.length > 0 && (
+                                <button 
+                                    onClick={() => {
+                                        setSelectedPhoto(eventPhotos[0]);
+                                        setIsPhotoFrameModalOpen(true);
+                                    }}
+                                    className="bg-[#247c64] hover:bg-[#1e6854] text-white text-[10px] font-medium uppercase tracking-widest py-3 px-6 rounded-full transition-colors border border-white/20 flex items-center space-x-2 shadow-lg"
+                                >
+                                    <Download size={14} />
+                                    <span>DOWNLOAD EVENT PHOTO</span>
+                                </button>
+                            )}
+                        </div>
+
+                        {isAdmin && (
+                            <div className="mt-3 flex justify-center">
+                                <button 
+                                    onClick={() => photoInputRef.current?.click()}
+                                    disabled={isUploading}
+                                    className="text-[#dfd6c5]/70 hover:text-[#dfd6c5] text-[11px] font-medium flex items-center space-x-1.5 transition-colors"
+                                >
+                                    <Camera size={13} />
+                                    <span>{isUploading ? 'Uploading...' : '[+ upload foto event]'}</span>
+                                </button>
+                                <input 
+                                    ref={photoInputRef}
+                                    type="file" 
+                                    accept="image/*" 
+                                    multiple 
+                                    className="hidden" 
+                                    onChange={handlePhotoUpload}
+                                />
+                            </div>
+                        )}
+
+                        {/* Hidden Graphic for Generation */}
+                        {loggedInResult && (
+                            <div className="absolute top-0 left-0 opacity-0 pointer-events-none z-[-1000]">
+                                <SessionResultGraphic 
+                                    ref={(el) => (graphicRefs.current[`${loggedInResult.result_id}_1`] = el)}
+                                    layout={1}
+                                    eventName={event.event_name}
+                                    placement={loggedInResult.finish}
+                                    wins={loggedInResult.wins || 0}
+                                    losses={loggedInResult.losses || 0}
+                                    winRate={loggedInResult.wins + loggedInResult.losses > 0 ? Math.round((loggedInResult.wins / (loggedInResult.wins + loggedInResult.losses)) * 100) : 0}
+                                    pointsEarned={loggedInResult.placement_bonus || 0}
+                                    tier={loggedInResult.member?.status_tier || 'CLUB'}
+                                    date={new Date(event.event_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase()}
+                                    location={event.location.toUpperCase()}
+                                />
+                                <SessionResultGraphic 
+                                    ref={(el) => (graphicRefs.current[`${loggedInResult.result_id}_2`] = el)}
+                                    layout={2}
+                                    eventName={event.event_name}
+                                    placement={loggedInResult.finish}
+                                    wins={loggedInResult.wins || 0}
+                                    losses={loggedInResult.losses || 0}
+                                    winRate={loggedInResult.wins + loggedInResult.losses > 0 ? Math.round((loggedInResult.wins / (loggedInResult.wins + loggedInResult.losses)) * 100) : 0}
+                                    pointsEarned={loggedInResult.placement_bonus || 0}
+                                    tier={loggedInResult.member?.status_tier || 'CLUB'}
+                                    date={new Date(event.event_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase()}
+                                    location={event.location.toUpperCase()}
+                                />
+                            </div>
+                        )}
+
+                        {/* Event Photos Gallery & Download with Frame */}
+                        {eventPhotos.length > 0 && (
+                            <div className="mt-8 border-t border-white/10 pt-6">
+                                <h3 className="text-white text-sm font-medium mb-4 flex items-center space-x-2">
+                                    <ImageIcon size={16} />
+                                    <span>Event Photos</span>
+                                    <span className="text-white/40 text-xs">({eventPhotos.length})</span>
+                                </h3>
+                                <div className="grid grid-cols-3 gap-2">
+                                    {eventPhotos.map((photo) => (
+                                        <div 
+                                            key={photo.id} 
+                                            className="relative aspect-square rounded-xl overflow-hidden bg-white/5 cursor-pointer group"
+                                            onClick={() => { setSelectedPhoto(photo); setIsPhotoFrameModalOpen(true); }}
+                                        >
+                                            <img 
+                                                src={photo.url} 
+                                                alt={photo.filename} 
+                                                className="w-full h-full object-cover"
+                                            />
+                                            <div className="absolute inset-0 bg-black/0 group-active:bg-black/30 transition-colors flex items-center justify-center">
+                                                <Download size={20} className="text-white opacity-0 group-active:opacity-100 transition-opacity" />
+                                            </div>
+                                            {isAdmin && isEditMode && (
+                                                <button
+                                                    onClick={(e) => { e.stopPropagation(); handleDeletePhoto(photo.id); }}
+                                                    className="absolute top-1 right-1 w-6 h-6 bg-[#9c3232] text-white rounded-full flex items-center justify-center"
+                                                >
+                                                    <Trash2 size={10} />
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         )}
@@ -921,6 +1359,93 @@ export default function EventShow({ event, participants }) {
                                 <span className="text-white text-[10px] text-center w-16 leading-tight font-medium">Share <br/> & Save</span>
                             </div>
 
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
+
+            {/* Photo Frame Selector & Download Modal */}
+            {isPhotoFrameModalOpen && selectedPhoto && createPortal(
+                <div className="fixed inset-0 z-[9999] flex flex-col bg-[#080d0a] text-white">
+                    {/* Header */}
+                    <div className="flex items-center justify-between p-4 pt-12 border-b border-white/10 shrink-0">
+                        <button 
+                            onClick={() => setIsPhotoFrameModalOpen(false)}
+                            className="p-2 -ml-2 text-white/80 hover:text-white"
+                        >
+                            <X size={24} />
+                        </button>
+                        <h2 className="text-sm font-medium tracking-widest uppercase text-[#dfd6c5]">
+                            Framed Event Photo
+                        </h2>
+                        <div className="w-8"></div>
+                    </div>
+
+                    {/* Body */}
+                    <div className="flex-1 flex flex-col items-center p-4 overflow-y-auto hide-scrollbar max-w-md mx-auto w-full">
+                        {/* Frame Toggle */}
+                        <div className="grid grid-cols-2 gap-2 w-full mb-3 shrink-0">
+                            <button
+                                onClick={() => setSelectedFrame(1)}
+                                className={`py-2 px-3 rounded-xl text-xs font-semibold transition-all border ${
+                                    selectedFrame === 1 
+                                        ? 'bg-[#247c64] border-[#247c64] text-white shadow-lg' 
+                                        : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                                }`}
+                            >
+                                Frame 1: Podium
+                            </button>
+                            <button
+                                onClick={() => setSelectedFrame(2)}
+                                className={`py-2 px-3 rounded-xl text-xs font-semibold transition-all border ${
+                                    selectedFrame === 2 
+                                        ? 'bg-[#247c64] border-[#247c64] text-white shadow-lg' 
+                                        : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                                }`}
+                            >
+                                Frame 2: TDC Classic
+                            </button>
+                        </div>
+
+                        {/* Photo Switcher (if multiple) */}
+                        {eventPhotos.length > 1 && (
+                            <div className="w-full mb-3 shrink-0">
+                                <span className="text-[10px] text-[#dfd6c5]/70 mb-1 block uppercase tracking-wider">Choose Photo:</span>
+                                <div className="flex space-x-2 overflow-x-auto pb-1 hide-scrollbar">
+                                    {eventPhotos.map((p) => (
+                                        <img
+                                            key={p.id}
+                                            src={p.url}
+                                            alt="thumb"
+                                            onClick={() => setSelectedPhoto(p)}
+                                            className={`w-12 h-12 object-cover rounded-lg cursor-pointer shrink-0 border-2 transition-all ${
+                                                selectedPhoto.id === p.id ? 'border-[#d4af37] scale-105 shadow-md' : 'border-white/10 opacity-60'
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Live Canvas Preview */}
+                        <div className="w-full max-w-[270px] aspect-[9/16] bg-black rounded-2xl overflow-hidden shadow-2xl relative border border-white/10 my-1 flex items-center justify-center shrink-0">
+                            <canvas 
+                                ref={framedCanvasRef} 
+                                className="w-full h-full object-contain"
+                            />
+                        </div>
+
+                        {/* Download CTA */}
+                        <div className="w-full mt-4 pb-8 shrink-0">
+                            <button
+                                onClick={() => generateFramedPhoto(selectedPhoto.url, selectedFrame)}
+                                disabled={isGeneratingFramed}
+                                className="w-full bg-[#d4af37] hover:bg-[#c09d31] text-black font-semibold py-3.5 px-6 rounded-2xl shadow-xl flex items-center justify-center space-x-2 transition-all active:scale-[0.98] disabled:opacity-50 text-xs tracking-wider uppercase"
+                            >
+                                <Download size={16} />
+                                <span>{isGeneratingFramed ? 'GENERATING...' : 'DOWNLOAD FRAMED PHOTO'}</span>
+                            </button>
                         </div>
                     </div>
                 </div>,

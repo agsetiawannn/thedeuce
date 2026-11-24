@@ -15,10 +15,14 @@ class EventController extends Controller
 
         if ($tab === 'past') {
             $query->whereDate('event_date', '<', \Carbon\Carbon::now('Asia/Makassar')->toDateString())
+                  ->where('status', 'ended')
                   ->orderBy('event_date', 'desc');
         } else {
-            $query->whereDate('event_date', '>=', \Carbon\Carbon::now('Asia/Makassar')->toDateString())
-                  ->orderBy('event_date', 'asc');
+            $query->where(function($q) {
+                $q->whereDate('event_date', '>=', \Carbon\Carbon::now('Asia/Makassar')->toDateString())
+                  ->orWhere('status', '!=', 'ended');
+            })
+            ->orderBy('event_date', 'asc');
         }
 
         $events = $query->get();
@@ -78,11 +82,18 @@ class EventController extends Controller
 
     public function show($id)
     {
-        $event = Event::with(['results.member.user'])->findOrFail($id);
+        $event = Event::with(['results.member.user', 'photos'])->findOrFail($id);
         
         return Inertia::render('Event/Show', [
             'event' => $event,
-            'participants' => $event->results, // The checked-in participants
+            'participants' => $event->results,
+            'eventPhotos' => $event->photos->map(function ($photo) {
+                return [
+                    'id' => $photo->id,
+                    'filename' => $photo->filename,
+                    'url' => '/storage/' . $photo->path,
+                ];
+            }),
         ]);
     }
 
